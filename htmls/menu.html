@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crave Cart - Menu</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Crave Cart</div>
+        <p>Browse our delicious menu</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            <li><a href="track.html"><i class="fas fa-truck"></i> Track</a></li>
+            <li><a href="feedback.html"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>Our Menu</h1>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for dishes...">
+            <button onclick="searchMenu()"><i class="fas fa-search"></i> Search</button>
+        </div>
+        
+        <h2>Promotions</h2>
+        <div class="ads">
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+1" alt="Coca Cola Ad 1">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+2" alt="Coca Cola Ad 2">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+3" alt="Coca Cola Ad 3">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+4" alt="Coca Cola Ad 4">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+5" alt="Coca Cola Ad 5">
+            </div>
+        </div>
+        
+        <div class="menu-categories">
+            <div class="category">
+                <h2>Appetizers</h2>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Garlic+Bread" alt="Garlic Bread">
+                        <div class="item-details">
+                            <h3>Garlic Bread</h3>
+                            <p>Crusty bread topped with garlic butter and herbs</p>
+                            <span class="item-price">$4.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('garlic-bread')"><i class="fas fa-minus"></i></button>
+                                <span id="garlic-bread-quantity">1</span>
+                                <button onclick="incrementQuantity('garlic-bread')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Garlic Bread', 4.99, 'garlic-bread-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Bruschetta" alt="Bruschetta">
+                        <div class="item-details">
+                            <h3>Bruschetta</h3>
+                            <p>Toasted bread topped with tomatoes, garlic, and fresh basil</p>
+                            <span class="item-price">$5.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('bruschetta')"><i class="fas fa-minus"></i></button>
+                                <span id="bruschetta-quantity">1</span>
+                                <button onclick="incrementQuantity('bruschetta')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Bruschetta', 5.99, 'bruschetta-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Mozzarella+Sticks" alt="Mozzarella Sticks">
+                        <div class="item-details">
+                            <h3>Mozzarella Sticks</h3>
+                            <p>Crispy fried mozzarella cheese with marinara sauce</p>
+                            <span class="item-price">$6.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('mozzarella-sticks')"><i class="fas fa-minus"></i></button>
+                                <span id="mozzarella-sticks-quantity">1</span>
+                                <button onclick="incrementQuantity('mozzarella-sticks')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Mozzarella Sticks', 6.99, 'mozzarella-sticks-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <h2>Main Courses</h2>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Spaghetti+Bolognese" alt="Spaghetti Bolognese">
+                        <div class="item-details">
+                            <h3>Spaghetti Bolognese</h3>
+                            <p>Classic pasta with rich meat sauce</p>
+                            <span class="item-price">$12.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('spaghetti')"><i class="fas fa-minus"></i></button>
+                                <span id="spaghetti-quantity">1</span>
+                                <button onclick="incrementQuantity('spaghetti')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Spaghetti Bolognese', 12.99, 'spaghetti-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Grilled+Salmon" alt="Grilled Salmon">
+                        <div class="item-details">
+                            <h3>Grilled Salmon</h3>
+                            <p>Fresh salmon fillet with lemon butter sauce</p>
+                            <span class="item-price">$16.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('salmon')"><i class="fas fa-minus"></i></button>
+                                <span id="salmon-quantity">1</span>
+                                <button onclick="incrementQuantity('salmon')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Grilled Salmon', 16.99, 'salmon-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Chicken+Alfredo" alt="Chicken Alfredo">
+                        <div class="item-details">
+                            <h3>Chicken Alfredo</h3>
+                            <p>Fettuccine pasta with creamy Alfredo sauce and grilled chicken</p>
+                            <span class="item-price">$14.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('alfredo')"><i class="fas fa-minus"></i></button>
+                                <span id="alfredo-quantity">1</span>
+                                <button onclick="incrementQuantity('alfredo')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Chicken Alfredo', 14.99, 'alfredo-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <h2>Desserts</h2>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Tiramisu" alt="Tiramisu">
+                        <div class="item-details">
+                            <h3>Tiramisu</h3>
+                            <p>Classic Italian dessert with layers of coffee-soaked ladyfingers</p>
+                            <span class="item-price">$7.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('tiramisu')"><i class="fas fa-minus"></i></button>
+                                <span id="tiramisu-quantity">1</span>
+                                <button onclick="incrementQuantity('tiramisu')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Tiramisu', 7.99, 'tiramisu-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/300x200?text=Chocolate+Lava+Cake" alt="Chocolate Lava Cake">
+                        <div class="item-details">
+                            <h3>Chocolate Lava Cake</h3>
+                            <p>Warm chocolate cake with a molten center, served with vanilla ice cream</p>
+                            <span class="item-price">$8.99</span>
+                            <div class="quantity-controls">
+                                <button onclick="decrementQuantity('lava-cake')"><i class="fas fa-minus"></i></button>
+                                <span id="lava-cake-quantity">1</span>
+                                <button onclick="incrementQuantity('lava-cake')"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('Chocolate Lava Cake', 8.99, 'lava-cake-quantity')">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Crave Cart brings delicious meals to your doorstep with just a few clicks.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@cravecart.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Crave Cart. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function incrementQuantity(itemId) {
+            const quantityElement = document.getElementById(`${itemId}-quantity`);
+            let quantity = parseInt(quantityElement.textContent);
+            quantityElement.textContent = quantity + 1;
+        }
+        
+        function decrementQuantity(itemId) {
+            const quantityElement = document.getElementById(`${itemId}-quantity`);
+            let quantity = parseInt(quantityElement.textContent);
+            if (quantity > 1) {
+                quantityElement.textContent = quantity - 1;
+            }
+        }
+        
+        function addToCart(itemName, itemPrice, quantityId) {
+            const quantity = parseInt(document.getElementById(quantityId).textContent);
+            const totalPrice = itemPrice * quantity;
+            
+            // In a real application, you would add this to a cart array or send to server
+            alert(`Added ${quantity} ${itemName}(s) to cart - Total: $${totalPrice.toFixed(2)}`);
+            
+            // Reset quantity to 1 after adding to cart
+            document.getElementById(quantityId).textContent = "1";
+        }
+        
+        function searchMenu() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const menuItems = document.querySelectorAll('.menu-item h3');
+            
+            menuItems.forEach(item => {
+                const menuItem = item.closest('.menu-item');
+                if (item.textContent.toLowerCase().includes(searchTerm)) {
+                    menuItem.style.display = 'flex';
+                } else {
+                    menuItem.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

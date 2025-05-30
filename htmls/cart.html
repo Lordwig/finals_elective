@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crave Cart - Your Cart</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <div class="logo">Crave Cart</div>
+        <p>Review your order</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span id="cart-count" class="cart-count"></span></a></li>
+            <li><a href="track.html"><i class="fas fa-truck"></i> Track</a></li>
+            <li><a href="feedback.html"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>Your Cart</h1>
+        
+        <div class="promo-banner">
+            <i class="fas fa-tag"></i> Free delivery on orders over $15! Add <span id="amount-needed">$0.00</span> more to qualify.
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart-message">Your cart is empty. <a href="menu.html">Browse our menu</a> to add items.</p>
+        </div>
+        
+        <div class="cart-summary" id="cartSummary" style="display: none;">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax (8%):</span>
+                <span id="tax">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee:</span>
+                <span id="delivery-fee">$2.99</span>
+            </div>
+            <div class="summary-row">
+                <span>Total:</span>
+                <span id="total">$0.00</span>
+            </div>
+        </div>
+        
+        <button class="checkout-btn" id="checkoutBtn" style="display: none;" onclick="placeOrder()">
+            <i class="fas fa-lock"></i> Place Order
+        </button>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Crave Cart. All rights reserved.</p>
+        <p>123 Food Street, San Francisco, CA 94107</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+    
+    <script>
+        // Update cart count in navigation
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const countElement = document.getElementById('cart-count');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                countElement.textContent = totalItems;
+                countElement.style.display = 'inline-block';
+            } else {
+                countElement.style.display = 'none';
+            }
+        }
+        
+        // Calculate free delivery eligibility
+        function checkFreeDelivery(subtotal) {
+            const freeDeliveryThreshold = 15;
+            const amountNeeded = Math.max(0, freeDeliveryThreshold - subtotal);
+            const deliveryFeeElement = document.getElementById('delivery-fee');
+            const amountNeededElement = document.getElementById('amount-needed');
+            
+            if (subtotal >= freeDeliveryThreshold) {
+                deliveryFeeElement.textContent = 'FREE';
+                deliveryFeeElement.style.color = '#4CAF50';
+                amountNeededElement.textContent = '$0.00';
+                return 0;
+            } else {
+                deliveryFeeElement.textContent = '$2.99';
+                deliveryFeeElement.style.color = '';
+                amountNeededElement.textContent = `$${amountNeeded.toFixed(2)}`;
+                return 2.99;
+            }
+        }
+        
+        // Display cart items
+        function displayCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            updateCartCount();
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty. <a href="menu.html">Browse our menu</a> to add items.</p>';
+                cartSummary.style.display = 'none';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-info">
+                        <img src="https://via.placeholder.com/80x80?text=${encodeURIComponent(item.name)}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h3>${item.name}</h3>
+                            <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button onclick="updateQuantity(${index}, 'decrease')"><i class="fas fa-minus"></i></button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${index}, 'increase')"><i class="fas fa-plus"></i></button>
+                        <button class="remove-item" onclick="removeItem(${index})"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                `;
+                
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+            
+            // Calculate totals
+            const tax = subtotal * 0.08;
+            const deliveryFee = checkFreeDelivery(subtotal);
+            const total = subtotal + tax + deliveryFee;
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            
+            cartSummary.style.display = 'block';
+            checkoutBtn.style.display = 'block';
+        }
+        
+        // Update item quantity
+        function updateQuantity(index, action) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (action === 'increase') {
+                cart[index].quantity++;
+            } else if (action === 'decrease' && cart[index].quantity > 1) {
+                cart[index].quantity--;
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCartItems();
+        }
+        
+        // Remove item from cart
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (confirm(`Remove ${cart[index].name} from your cart?`)) {
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCartItems();
+            }
+        }
+        
+        // Place order
+        function placeOrder() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before placing an order.');
+                return;
+            }
+            
+            // Generate order details
+            const orderNumber = 'ORD-' + Date.now().toString().slice(-6);
+            const orderTotal = document.getElementById('total').textContent;
+            
+            // Save order to history
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push({
+                orderNumber,
+                items: cart,
+                date: new Date().toISOString(),
+                total: orderTotal,
+                status: 'Preparing'
+            });
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Clear cart
+            localStorage.removeItem('cart');
+            
+            // Redirect to order confirmation
+            window.location.href = `track.html?order=${orderNumber}`;
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            displayCartItems();
+        });
+    </script>
+</body>
+</html>

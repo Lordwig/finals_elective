@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crave Cart - Order Tracking</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Crave Cart</div>
+        <p>Track your order</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            <li><a href="track.html"><i class="fas fa-truck"></i> Track</a></li>
+            <li><a href="feedback.html"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>Order Tracking</h1>
+        
+        <h2>Promotions</h2>
+        <div class="ads">
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+1" alt="Coca Cola Ad 1">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+2" alt="Coca Cola Ad 2">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+3" alt="Coca Cola Ad 3">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+4" alt="Coca Cola Ad 4">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+5" alt="Coca Cola Ad 5">
+            </div>
+        </div>
+        
+        <div class="order-confirmation" id="orderConfirmation">
+            <i class="fas fa-check-circle"></i>
+            <h2>Order Confirmed!</h2>
+            <p>Thank you for your order. Your food is being prepared and will be delivered soon.</p>
+            <p id="orderNumber">Order Number: <span id="orderNum"></span></p>
+            <p>Estimated delivery time: <strong>30-45 minutes</strong></p>
+            <a href="menu.html" class="checkout-btn">Order Again</a>
+        </div>
+        
+        <div class="no-order" id="noOrder" style="display: none;">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>No Recent Orders</h2>
+            <p>You haven't placed any orders yet. <a href="menu.html">Browse our menu</a> to get started!</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Crave Cart. All rights reserved.</p>
+        <p>123 Food Street, San Francisco, CA 94107</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript for track page
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderNumber = urlParams.get('order');
+            
+            if (orderNumber) {
+                document.getElementById('orderNum').textContent = orderNumber;
+                document.getElementById('orderConfirmation').style.display = 'block';
+                document.getElementById('noOrder').style.display = 'none';
+            } else {
+                document.getElementById('orderConfirmation').style.display = 'none';
+                document.getElementById('noOrder').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

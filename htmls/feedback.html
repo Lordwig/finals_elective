@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crave Cart - Feedback</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Crave Cart</div>
+        <p>We value your feedback</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            <li><a href="track.html"><i class="fas fa-truck"></i> Track</a></li>
+            <li><a href="feedback.html"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1>Customer Feedback</h1>
+        
+        <h2>Promotions</h2>
+        <div class="ads">
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+1" alt="Coca Cola Ad 1">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+2" alt="Coca Cola Ad 2">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+3" alt="Coca Cola Ad 3">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+4" alt="Coca Cola Ad 4">
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/300x200?text=Coca+Cola+Ad+5" alt="Coca Cola Ad 5">
+            </div>
+        </div>
+        
+        <div class="feedback-form" id="feedbackForm">
+            <h2>Share Your Experience</h2>
+            <form id="feedbackFormElement">
+                <div class="form-group">
+                    <label for="name">Your Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email (Optional)</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>How would you rate your experience?</label>
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea id="comments" name="comments" placeholder="Tell us about your experience..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Feedback</button>
+            </form>
+        </div>
+        
+        <div class="feedback-summary" id="feedbackSummary">
+            <i class="fas fa-check-circle"></i>
+            <h2>Thank You for Your Feedback!</h2>
+            <p>We appreciate you taking the time to share your experience with us.</p>
+            <p>Your feedback helps us improve our service.</p>
+            <a href="index.html" class="checkout-btn">Back to Home</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Crave Cart. All rights reserved.</p>
+        <p>123 Food Street, San Francisco, CA 94107</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript for feedback page
+        document.addEventListener('DOMContentLoaded', function() {
+            const feedbackForm = document.getElementById('feedbackFormElement');
+            const feedbackSummary = document.getElementById('feedbackSummary');
+            
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const rating = document.querySelector('input[name="rating"]:checked') ? document.querySelector('input[name="rating"]:checked').value : null;
+                const comments = document.getElementById('comments').value;
+                
+                // Simple validation
+                if (!comments) {
+                    alert('Please provide your comments before submitting.');
+                    return;
+                }
+                
+                if (!rating) {
+                    alert('Please rate your experience before submitting.');
+                    return;
+                }
+                
+                // In a real application, you would send this data to a server
+                // For this demo, we'll just store it in localStorage
+                const feedback = {
+                    name: name || 'Anonymous',
+                    email: email || '',
+                    rating: rating,
+                    comments: comments,
+                    date: new Date().toISOString()
+                };
+                
+                // Save feedback
+                const allFeedback = JSON.parse(localStorage.getItem('feedback')) || [];
+                allFeedback.push(feedback);
+                localStorage.setItem('feedback', JSON.stringify(allFeedback));
+                
+                // Show summary and hide form
+                feedbackForm.style.display = 'none';
+                feedbackSummary.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
