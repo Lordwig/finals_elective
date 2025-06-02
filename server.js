@@ -21,6 +21,7 @@ app.get('/menu', serveHtml('menu.html'));
 app.get('/cart', serveHtml('cart.html'));
 app.get('/track', serveHtml('track.html'));
 app.get('/feedback', serveHtml('feedback.html'));
+app.get('/about', serveHtml('about.html'));
 
 // API Endpoints
 const readJsonFile = (filePath) => {

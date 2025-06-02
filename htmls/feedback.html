@@ -59,22 +59,25 @@
                     <input type="email" id="email" name="email" placeholder="john@example.com">
                 </div>
                 
-                <div class="form-group">
-                    <label>How would you rate your experience?</label>
-                    <div class="rating">
-                        <input type="radio" id="star5" name="rating" value="5">
-                        <label for="star5"><i class="fas fa-star"></i></label>
-                        <input type="radio" id="star4" name="rating" value="4">
-                        <label for="star4"><i class="fas fa-star"></i></label>
-                        <input type="radio" id="star3" name="rating" value="3">
-                        <label for="star3"><i class="fas fa-star"></i></label>
-                        <input type="radio" id="star2" name="rating" value="2">
-                        <label for="star2"><i class="fas fa-star"></i></label>
-                        <input type="radio" id="star1" name="rating" value="1">
-                        <label for="star1"><i class="fas fa-star"></i></label>
-                    </div>
+               <div class="form-group"> 
+                <label>How would you rate your experience?</label>
+                <div class="rating" style="direction: rtl; unicode-bidi: bidi-override;">
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1"><i class="fas fa-star"></i></label>
+
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2"><i class="fas fa-star"></i></label>
+
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3"><i class="fas fa-star"></i></label>
+
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4"><i class="fas fa-star"></i></label>
+
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5"><i class="fas fa-star"></i></label>
                 </div>
-                
+            </div>
                 <div class="form-group">
                     <label for="comments">Comments</label>
                     <textarea id="comments" name="comments" placeholder="Tell us about your experience..." required></textarea>
@@ -104,51 +107,56 @@
     </footer>
     
     <script>
-        // JavaScript for feedback page
-        document.addEventListener('DOMContentLoaded', function() {
-            const feedbackForm = document.getElementById('feedbackFormElement');
-            const feedbackSummary = document.getElementById('feedbackSummary');
-            
-            feedbackForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const rating = document.querySelector('input[name="rating"]:checked') ? document.querySelector('input[name="rating"]:checked').value : null;
-                const comments = document.getElementById('comments').value;
-                
-                // Simple validation
-                if (!comments) {
-                    alert('Please provide your comments before submitting.');
-                    return;
-                }
-                
-                if (!rating) {
-                    alert('Please rate your experience before submitting.');
-                    return;
-                }
-                
-                // In a real application, you would send this data to a server
-                // For this demo, we'll just store it in localStorage
-                const feedback = {
-                    name: name || 'Anonymous',
-                    email: email || '',
-                    rating: rating,
-                    comments: comments,
-                    date: new Date().toISOString()
-                };
-                
-                // Save feedback
-                const allFeedback = JSON.parse(localStorage.getItem('feedback')) || [];
-                allFeedback.push(feedback);
-                localStorage.setItem('feedback', JSON.stringify(allFeedback));
-                
-                // Show summary and hide form
+document.addEventListener('DOMContentLoaded', function () {
+    const feedbackForm = document.getElementById('feedbackFormElement');
+    const feedbackSummary = document.getElementById('feedbackSummary');
+
+    feedbackForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const rating = document.querySelector('input[name="rating"]:checked')?.value;
+        const comments = document.getElementById('comments').value;
+
+        if (!comments) {
+            alert('Please provide your comments.');
+            return;
+        }
+
+        if (!rating) {
+            alert('Please rate your experience.');
+            return;
+        }
+
+        const formData = new URLSearchParams();
+        formData.append('name', name || 'Anonymous');
+        formData.append('email', email || '');
+        formData.append('rating', rating);
+        formData.append('comments', comments);
+
+        fetch('https://script.google.com/macros/s/AKfycbwz_MLTPXwm78i2CfV32tjs9m3j3PFFb6sqpFz60LrN0j94bBlr7kVHDjirg9S8CUqIng/exec', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'success') {
                 feedbackForm.style.display = 'none';
                 feedbackSummary.style.display = 'block';
-            });
+            } else {
+                alert('Submission failed.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Submission error. Check console for details.');
         });
-    </script>
+    });
+ 
+});
+</script>
+
+        
 </body>
 </html>
