@@ -92,8 +92,8 @@
         }
         
         .header-logo-img {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--primary);
@@ -605,7 +605,7 @@
                                 <span id="garlic-bread-quantity">1</span>
                                 <button onclick="incrementQuantity('garlic-bread')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Garlic Bread', 4.99, 'garlic-bread-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Garlic Bread', 4.99, 'garlic-bread-quantity', 'https://static01.nyt.com/images/2018/12/11/dining/as-garlic-bread/as-garlic-bread-square640.jpg')">Add to Cart</button>
                         </div>
                     </div>
                     
@@ -620,7 +620,7 @@
                                 <span id="bruschetta-quantity">1</span>
                                 <button onclick="incrementQuantity('bruschetta')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Bruschetta', 5.99, 'bruschetta-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Bruschetta', 5.99, 'bruschetta-quantity', 'https://images.unsplash.com/photo-1603105037880-880cd4edfb0d')">Add to Cart</button>
                         </div>
                     </div>
                     
@@ -635,7 +635,7 @@
                                 <span id="mozzarella-sticks-quantity">1</span>
                                 <button onclick="incrementQuantity('mozzarella-sticks')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Mozzarella Sticks', 6.99, 'mozzarella-sticks-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Mozzarella Sticks', 6.99, 'mozzarella-sticks-quantity', 'https://images.unsplash.com/photo-1562967914-608f82629710')">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -655,7 +655,7 @@
                                 <span id="spaghetti-quantity">1</span>
                                 <button onclick="incrementQuantity('spaghetti')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Spaghetti Bolognese', 12.99, 'spaghetti-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Spaghetti Bolognese', 12.99, 'spaghetti-quantity', 'https://media.istockphoto.com/id/1399179382/photo/traditional-italian-spaghetti-bolognese-on-a-dark-background.jpg?s=612x612&w=0&k=20&c=f3yo8eqzp0_59_0mb28Re503MAyu2SCklN2rWyezDEI=')">Add to Cart</button>
                         </div>
                     </div>
                     
@@ -670,7 +670,7 @@
                                 <span id="salmon-quantity">1</span>
                                 <button onclick="incrementQuantity('salmon')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Grilled Salmon', 16.99, 'salmon-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Grilled Salmon', 16.99, 'salmon-quantity', 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2')">Add to Cart</button>
                         </div>
                     </div>
                     
@@ -685,7 +685,7 @@
                                 <span id="alfredo-quantity">1</span>
                                 <button onclick="incrementQuantity('alfredo')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Chicken Alfredo', 14.99, 'alfredo-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Chicken Alfredo', 14.99, 'alfredo-quantity', 'https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-V3.jpg')">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -705,7 +705,7 @@
                                 <span id="tiramisu-quantity">1</span>
                                 <button onclick="incrementQuantity('tiramisu')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Tiramisu', 7.99, 'tiramisu-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Tiramisu', 7.99, 'tiramisu-quantity', 'https://cookingitalians.com/wp-content/uploads/2023/10/18033.jpg')">Add to Cart</button>
                         </div>
                     </div>
                     
@@ -720,7 +720,7 @@
                                 <span id="lava-cake-quantity">1</span>
                                 <button onclick="incrementQuantity('lava-cake')"><i class="fas fa-plus"></i></button>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart('Chocolate Lava Cake', 8.99, 'lava-cake-quantity')">Add to Cart</button>
+                            <button class="add-to-cart" onclick="addToCart('Chocolate Lava Cake', 8.99, 'lava-cake-quantity', 'https://www.billyparisi.com/wp-content/uploads/2022/02/lava-cake-1.jpg')">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -796,7 +796,7 @@
             }
         }
         
-        function addToCart(itemName, itemPrice, quantityId) {
+        function addToCart(itemName, itemPrice, quantityId, imageUrl) {
             const quantity = parseInt(document.getElementById(quantityId).textContent);
             const totalPrice = itemPrice * quantity;
             
@@ -813,7 +813,8 @@
                     name: itemName,
                     price: itemPrice,
                     quantity: quantity,
-                    totalPrice: totalPrice
+                    totalPrice: totalPrice,
+                    imageUrl: imageUrl
                 });
             }
             

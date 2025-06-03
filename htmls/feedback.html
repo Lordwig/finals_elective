@@ -4,159 +4,635 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crave Cart - Feedback</title>
-    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles - Consistent with other pages */
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ff8e8e;
+            --dark: #333;
+            --light: #fff;
+            --gray: #f5f5f5;
+            --accent: #ffb347;
+            --text: #555;
+            --success: #4CAF50;
+            --warning: #FFC107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background-color: var(--light);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--light);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Header Logo Styles */
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-left: 20px;
+        }
+        
+        .header-logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .header-logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-logo-main {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .header-logo-tagline {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 300;
+        }
+        
+        /* Navigation */
+        .main-nav {
+            background: var(--primary);
+            padding: 15px 0;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .main-nav li a {
+            color: var(--light);
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .main-nav li a:hover, .main-nav li a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .main-nav i {
+            font-size: 1.1rem;
+        }
+        
+        /* Feedback Header */
+        .feedback-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5') no-repeat center center/cover;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light);
+            margin-bottom: 40px;
+        }
+        
+        .feedback-header h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Persistent Coca-Cola Ads Section */
+        .persistent-ads {
+            margin: 40px 0;
+            display: block !important;
+        }
+        
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .ad-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .ad-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .ad-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Feedback Form Styles */
+        .feedback-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+        }
+        
+        .feedback-form {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        
+        .feedback-form h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .rating input {
+            display: none;
+        }
+        
+        .rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #ddd;
+            transition: all 0.2s ease;
+        }
+        
+        .rating label:hover,
+        .rating label:hover ~ label,
+        .rating input:checked ~ label {
+            color: var(--accent);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        /* Feedback Summary */
+        .feedback-summary {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 40px;
+            display: none;
+        }
+        
+        .feedback-summary i {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .feedback-summary h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .feedback-summary p {
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 60px 0 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            padding: 0 15px;
+        }
+        
+        .footer-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .feedback-header h1 {
+                font-size: 2rem;
+            }
+            
+            .header-logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .main-nav ul {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .feedback-form,
+            .feedback-summary {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Crave Cart</div>
-        <p>We value your feedback</p>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
-            <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
-            <li><a href="track.html"><i class="fas fa-truck"></i> Track</a></li>
-            <li><a href="feedback.html"><i class="fas fa-comment-alt"></i> Feedback</a></li>
-        </ul>
-    </nav>
-    
-    <div class="container">
-        <h1>Customer Feedback</h1>
-        
-         <h2>Promotions</h2>
-        <div class="ads">
-            <div class="ad">
-                <img src="images/cocacola1.jpg" alt="Coca Cola Ad 1">
+    <!-- Top Header Bar with Logo -->
+    <div class="top-bar">
+        <div class="header-logo-container">
+            <img src="https://media.istockphoto.com/id/1435983029/vector/food-delivery-logo-images.jpg?s=612x612&w=0&k=20&c=HXPxcjOxUiW4pMW1u9E0k2dJYQOU37a_0qZAy3so8fY=" alt="Crave Cart Logo" class="header-logo-img">
+            <div class="header-logo-text">
+                <span class="header-logo-main">Crave Cart</span>
+                <span class="header-logo-tagline">Your favorite food, just a click away!</span>
             </div>
-            <div class="ad">
-                <img src="images/cocacola2.jpg" alt="Coca Cola Ad 2">
-            </div>
-            <div class="ad">
-                <img src="images/cocacola3.jpg" alt="Coca Cola Ad 3">
-            </div>
-            <div class="ad">
-                <img src="images/cocacola4.png" alt="Coca Cola Ad 4">
-            </div>
-            <div class="ad">
-                <img src="images/cocacola5.png" alt="Coca Cola Ad 5">
-            </div>
-        </div>
-        
-        
-        <div class="feedback-form" id="feedbackForm">
-            <h2>Share Your Experience</h2>
-            <form id="feedbackFormElement">
-                <div class="form-group">
-                    <label for="name">Your Name (Optional)</label>
-                    <input type="text" id="name" name="name" placeholder="John Doe">
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email (Optional)</label>
-                    <input type="email" id="email" name="email" placeholder="john@example.com">
-                </div>
-                
-               <div class="form-group"> 
-                <label>How would you rate your experience?</label>
-                <div class="rating" style="direction: rtl; unicode-bidi: bidi-override;">
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4"><i class="fas fa-star"></i></label>
-
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5"><i class="fas fa-star"></i></label>
-                </div>
-            </div>
-                <div class="form-group">
-                    <label for="comments">Comments</label>
-                    <textarea id="comments" name="comments" placeholder="Tell us about your experience..." required></textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">Submit Feedback</button>
-            </form>
-        </div>
-        
-        <div class="feedback-summary" id="feedbackSummary">
-            <i class="fas fa-check-circle"></i>
-            <h2>Thank You for Your Feedback!</h2>
-            <p>We appreciate you taking the time to share your experience with us.</p>
-            <p>Your feedback helps us improve our service.</p>
-            <a href="index.html" class="checkout-btn">Back to Home</a>
         </div>
     </div>
-    
-    <footer>
-        <p>&copy; 2023 Crave Cart. All rights reserved.</p>
-        <p>123 Food Street, San Francisco, CA 94107</p>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li><a href="track.html"><i class="fas fa-truck"></i> Track</a></li>
+                <li><a href="feedback.html" class="active"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Feedback Header -->
+    <section class="feedback-header">
+        <div>
+            <h1>Customer Feedback</h1>
+            <p>We value your opinion and would love to hear from you</p>
+        </div>
+    </section>
+
+    <div class="container">
+       <!-- Promotions Section -->
+        <section class="ads-section">
+            <h2 class="section-title">Coca Cola is the best Cola</h2>
+            <div class="ads-grid">
+                <div class="ad-card">
+                    <img src="https://www.freepnglogos.com/uploads/coca-cola-png/can-coca-cola-fearoftheblackwolf-deviantart-26.png" alt="Coca Cola Ad 1">
+                </div>
+                <div class="ad-card">
+                    <img src="https://purepng.com/public/uploads/thumbnail//purepng.com-coca-cola-soda-canobjectscoca-cola-soda-canfood-soda-object-can-drink-beverage-coke-631522325785jowfo.png" alt="Coca Cola Ad 2">
+                </div>
+                <div class="ad-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8zAr6kt9B6bvxpPI3PX9A4dWlQsWfLLPyGw&s" alt="Coca Cola Ad 3">
+                </div>
+                <div class="ad-card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV195rzLt9D81sErnET6e12x8aM-n0pYaQpQ&s" alt="Coca Cola Ad 4">
+                </div>
+                <div class="ad-card">
+                    <img src="https://static.vecteezy.com/system/resources/previews/036/624/221/non_2x/aluminum-can-of-coca-cola-with-water-drops-isolated-on-transparent-background-free-png.png" alt="Coca Cola Ad 5">
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Content -->
+        <div class="feedback-container">
+            <div class="feedback-form" id="feedbackForm">
+                <h2>Share Your Experience</h2>
+                <form id="feedbackFormElement">
+                    <div class="form-group">
+                        <label for="name">Your Name (Optional)</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email (Optional)</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com">
+                    </div>
+                    
+                    <div class="form-group"> 
+                        <label>How would you rate your experience?</label>
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5">
+                            <label for="star5"><i class="fas fa-star"></i></label>
+                            
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4"><i class="fas fa-star"></i></label>
+                            
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3"><i class="fas fa-star"></i></label>
+                            
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2"><i class="fas fa-star"></i></label>
+                            
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1"><i class="fas fa-star"></i></label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comments">Comments</label>
+                        <textarea id="comments" name="comments" placeholder="Tell us about your experience..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn submit-btn">Submit Feedback</button>
+                </form>
+            </div>
+            
+            <div class="feedback-summary" id="feedbackSummary">
+                <i class="fas fa-check-circle"></i>
+                <h2>Thank You for Your Feedback!</h2>
+                <p>We appreciate you taking the time to share your experience with us.</p>
+                <p>Your feedback helps us improve our service.</p>
+                <a href="index.html" class="btn">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo-container">
+                        <img src="https://media.istockphoto.com/id/1435983029/vector/food-delivery-logo-images.jpg?s=612x612&w=0&k=20&c=HXPxcjOxUiW4pMW1u9E0k2dJYQOU37a_0qZAy3so8fY=" alt="Crave Cart Logo" class="footer-logo-img">
+                    </div>
+                    <p>Delivering happiness one meal at a time</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="track.html">Track Order</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, San Francisco</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@cravecart.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Crave Cart. All rights reserved.</p>
+            </div>
         </div>
     </footer>
-    
+
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const feedbackForm = document.getElementById('feedbackFormElement');
-    const feedbackSummary = document.getElementById('feedbackSummary');
+        document.addEventListener('DOMContentLoaded', function () {
+            const feedbackForm = document.getElementById('feedbackFormElement');
+            const feedbackSummary = document.getElementById('feedbackSummary');
 
-    feedbackForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+            // Initially hide the summary
+            feedbackSummary.style.display = 'none';
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const rating = document.querySelector('input[name="rating"]:checked')?.value;
-        const comments = document.getElementById('comments').value;
+            feedbackForm.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-        if (!comments) {
-            alert('Please provide your comments.');
-            return;
-        }
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const rating = document.querySelector('input[name="rating"]:checked')?.value;
+                const comments = document.getElementById('comments').value;
 
-        if (!rating) {
-            alert('Please rate your experience.');
-            return;
-        }
+                if (!comments) {
+                    alert('Please provide your comments.');
+                    return;
+                }
 
-        const formData = new URLSearchParams();
-        formData.append('name', name || 'Anonymous');
-        formData.append('email', email || '');
-        formData.append('rating', rating);
-        formData.append('comments', comments);
+                if (!rating) {
+                    alert('Please rate your experience.');
+                    return;
+                }
 
-        fetch('https://script.google.com/macros/s/AKfycbwz_MLTPXwm78i2CfV32tjs9m3j3PFFb6sqpFz60LrN0j94bBlr7kVHDjirg9S8CUqIng/exec', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.text())
-        .then(data => {
-            if (data === 'success') {
-                feedbackForm.style.display = 'none';
-                feedbackSummary.style.display = 'block';
-            } else {
-                alert('Submission failed.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Submission error. Check console for details.');
+                const formData = new URLSearchParams();
+                formData.append('name', name || 'Anonymous');
+                formData.append('email', email || '');
+                formData.append('rating', rating);
+                formData.append('comments', comments);
+
+                fetch('https://script.google.com/macros/s/AKfycbwz_MLTPXwm78i2CfV32tjs9m3j3PFFb6sqpFz60LrN0j94bBlr7kVHDjirg9S8CUqIng/exec', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'success') {
+                        feedbackForm.style.display = 'none';
+                        feedbackSummary.style.display = 'block';
+                    } else {
+                        alert('Submission failed.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Submission error. Check console for details.');
+                });
+            });
         });
-    });
- 
-});
-</script>
-
-        
+    </script>
 </body>
 </html>
