@@ -152,7 +152,7 @@
         
         /* Tracking Page Specific Styles */
         .tracking-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://static.vecteezy.com/system/resources/previews/010/801/642/original/aerial-clean-top-view-of-the-night-time-city-map-with-street-and-river-001-vector.jpg') no-repeat center center/cover;
             height: 250px;
             display: flex;
             align-items: center;
@@ -339,90 +339,113 @@
         /* Delivery Map */
         .delivery-map {
             width: 100%;
-            height: 300px;
+            height: 400px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             margin: 30px 0;
-            background: #f0f0f0;
             position: relative;
         }
-        
-        .map-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://i.imgur.com/JWYHQvJ.png') no-repeat center center/cover;
-            opacity: 0.5;
+
+        #mapContainer {
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
         }
-        
-        .delivery-route {
+
+        .delivery-info {
             position: absolute;
-            top: 50%;
-            left: 10%;
-            right: 10%;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .eta-container, .distance-container {
             display: flex;
             align-items: center;
+            gap: 8px;
+            margin: 5px 0;
         }
-        
-        .route-start, .route-end {
+
+        .eta-container i, .distance-container i {
+            color: var(--primary);
+        }
+
+        /* Map Marker Styles */
+        .map-marker {
             width: 40px;
             height: 40px;
-            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background: white;
+            border: 2px solid;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 5;
         }
-        
-        .route-start i {
+
+        .restaurant-marker {
+            border-color: var(--primary);
+        }
+
+        .restaurant-marker i {
             color: var(--primary);
         }
-        
-        .route-end i {
+
+        .home-marker {
+            border-color: var(--success);
+        }
+
+        .home-marker i {
             color: var(--success);
         }
-        
-        .route-line {
-            flex-grow: 1;
-            height: 6px;
-            background: #ddd;
-            position: relative;
-            margin: 0 10px;
-        }
-        
-        .route-progress {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: var(--primary);
-            transition: width 0.5s ease;
-        }
-        
-        .delivery-vehicle {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+
+        .delivery-vehicle-marker {
             width: 50px;
             height: 50px;
             background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            z-index: 3;
-            transition: left 0.5s ease;
+            border: 2px solid white;
+            z-index: 6;
+            transition: all 0.5s ease;
         }
-        
-        .delivery-vehicle i {
+
+        .delivery-vehicle-marker i {
             color: white;
             font-size: 1.5rem;
+        }
+
+        /* Route Line Styles */
+        .route-line {
+            position: absolute;
+            height: 4px;
+            background: #ddd;
+            z-index: 2;
+        }
+
+        .route-progress {
+            position: absolute;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.5s ease;
+            z-index: 3;
+        }
+
+        /* Pulse Animation for Vehicle */
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .pulse-animation {
+            animation: pulse 1.5s infinite;
         }
         
         /* Notification */
@@ -722,9 +745,17 @@
                 </div>
                 
                 <!-- Delivery Map -->
-                <div class="delivery-map">
-                    <div class="map-overlay">
-                        <p>Live delivery tracking coming soon!</p>
+                <div class="delivery-map" id="deliveryMap">
+                    <div id="mapContainer"></div>
+                    <div class="delivery-info">
+                        <div class="eta-container">
+                            <i class="fas fa-clock"></i>
+                            <span>ETA: <strong id="etaTime">Calculating...</strong></span>
+                        </div>
+                        <div class="distance-container">
+                            <i class="fas fa-route"></i>
+                            <span>Distance: <strong id="distanceText">Calculating...</strong></span>
+                        </div>
                     </div>
                 </div>
                 
@@ -759,11 +790,11 @@
                         <li><a href="feedback.html">Feedback</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+   <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, San Francisco</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, Mataas na lupa,</p>
                     <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                    <p><i class="fas fa-envelope"></i> info@cravecart.com</p>
+                    <p><i class="fas fa-envelope"></i> ordernow@cravecart.com</p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
@@ -807,11 +838,160 @@
             
             // Update time displays
             document.getElementById('time1').textContent = formatTime(now);
-            
+
+            // Create and initialize the delivery map
+            initializeDeliveryMap();
+
             // Mark first step as active
             document.getElementById('step1').classList.add('active');
-            
-            // Update progress after 2 minutes (120000ms)
+
+            // Initialize delivery map with route and markers
+            function initializeDeliveryMap() {
+                const mapContainer = document.getElementById('mapContainer');
+                const mapElement = document.getElementById('deliveryMap');
+                
+                // Clear previous content
+                mapContainer.innerHTML = '';
+                
+                // Create map background with Mataas na Lupa, Lipa City map
+                const mapBackground = document.createElement('div');
+                mapBackground.className = 'map-background';
+                mapContainer.appendChild(mapBackground);
+                
+                // Create restaurant marker (starting point)
+                const restaurantMarker = document.createElement('div');
+                restaurantMarker.className = 'map-marker restaurant-marker';
+                restaurantMarker.innerHTML = '<i class="fas fa-store"></i>';
+                restaurantMarker.style.left = '20%';
+                restaurantMarker.style.top = '40%';
+                mapContainer.appendChild(restaurantMarker);
+                
+                // Create home marker (destination)
+                const homeMarker = document.createElement('div');
+                homeMarker.className = 'map-marker home-marker';
+                homeMarker.innerHTML = '<i class="fas fa-home"></i>';
+                homeMarker.style.left = '80%';
+                homeMarker.style.top = '60%';
+                mapContainer.appendChild(homeMarker);
+                
+                // Create route line
+                const routeLine = document.createElement('div');
+                routeLine.className = 'route-line';
+                
+                // Calculate route line position and angle
+                const startX = parseFloat(restaurantMarker.style.left);
+                const startY = parseFloat(restaurantMarker.style.top);
+                const endX = parseFloat(homeMarker.style.left);
+                const endY = parseFloat(homeMarker.style.top);
+                
+                // Calculate distance and angle
+                const deltaX = endX - startX;
+                const deltaY = endY - startY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+                
+                // Position and rotate the route line
+                routeLine.style.width = `${distance}%`;
+                routeLine.style.left = `${startX}%`;
+                routeLine.style.top = `${startY}%`;
+                routeLine.style.transformOrigin = '0 0';
+                routeLine.style.transform = `rotate(${angle}deg)`;
+                
+                // Create route progress indicator
+                const routeProgress = document.createElement('div');
+                routeProgress.className = 'route-progress';
+                routeProgress.id = 'routeProgress';
+                routeProgress.style.width = '0%';
+                routeLine.appendChild(routeProgress);
+                
+                mapContainer.appendChild(routeLine);
+                
+                // Create delivery vehicle marker
+                const vehicleMarker = document.createElement('div');
+                vehicleMarker.className = 'map-marker delivery-vehicle-marker';
+                vehicleMarker.id = 'deliveryVehicle';
+                vehicleMarker.innerHTML = '<i class="fas fa-motorcycle"></i>';
+                vehicleMarker.style.left = `${startX}%`;
+                vehicleMarker.style.top = `${startY}%`;
+                mapContainer.appendChild(vehicleMarker);
+                
+                // Set initial ETA and distance
+                document.getElementById('etaTime').textContent = '5-10 minutes';
+                document.getElementById('distanceText').textContent = '3.2 km';
+                
+                // Add map styling with Mataas na Lupa, Lipa City map background
+                mapBackground.style.background = 'url("https://static.vecteezy.com/system/resources/previews/010/801/642/original/aerial-clean-top-view-of-the-night-time-city-map-with-street-and-river-001-vector.jpg") no-repeat center center/cover';
+                mapBackground.style.position = 'absolute';
+                mapBackground.style.top = '0';
+                mapBackground.style.left = '0';
+                mapBackground.style.width = '100%';
+                mapBackground.style.height = '100%';
+                mapBackground.style.opacity = '0.9';
+            }
+
+            // Update delivery map with progress
+            function updateDeliveryMap(progress) {
+                // Update route progress
+                const routeProgress = document.getElementById('routeProgress');
+                if (routeProgress) {
+                    routeProgress.style.width = `${progress}%`;
+                }
+                
+                // Update vehicle position
+                const vehicle = document.getElementById('deliveryVehicle');
+                if (vehicle) {
+                    const restaurantMarker = document.querySelector('.restaurant-marker');
+                    const homeMarker = document.querySelector('.home-marker');
+                    
+                    if (restaurantMarker && homeMarker) {
+                        const startX = parseFloat(restaurantMarker.style.left);
+                        const startY = parseFloat(restaurantMarker.style.top);
+                        const endX = parseFloat(homeMarker.style.left);
+                        const endY = parseFloat(homeMarker.style.top);
+                        
+                        // Calculate new position based on progress
+                        const newX = startX + ((endX - startX) * (progress / 100));
+                        const newY = startY + ((endY - startY) * (progress / 100));
+                        
+                        // Update vehicle position with smooth transition
+                        vehicle.style.left = `${newX}%`;
+                        vehicle.style.top = `${newY}%`;
+                        
+                        // Add pulse animation when vehicle is moving
+                        if (progress > 0 && progress < 100) {
+                            vehicle.classList.add('pulse-animation');
+                        } else {
+                            vehicle.classList.remove('pulse-animation');
+                        }
+                    }
+                }
+                
+                // Update ETA based on progress - adjusted for shorter timeframes
+                const etaElement = document.getElementById('etaTime');
+                if (etaElement) {
+                    if (progress === 0) {
+                        etaElement.textContent = '5-10 minutes';
+                    } else if (progress < 33) {
+                        etaElement.textContent = '4-6 minutes';
+                    } else if (progress < 66) {
+                        etaElement.textContent = '2-4 minutes';
+                    } else if (progress < 100) {
+                        etaElement.textContent = '1-2 minutes';
+                    } else {
+                        etaElement.textContent = 'Delivered!';
+                    }
+                }
+                
+                // Update distance based on progress
+                const distanceElement = document.getElementById('distanceText');
+                if (distanceElement) {
+                    const totalDistance = 3.2; // in km
+                    const remainingDistance = totalDistance * (1 - progress / 100);
+                    distanceElement.textContent = `${remainingDistance.toFixed(1)} km`;
+                }
+            }
+
+            // Update progress after 30 seconds (30000ms) - reduced from 2 minutes
             setTimeout(() => {
                 progress = 33;
                 document.getElementById('progressBar').style.width = `${progress}%`;
@@ -819,13 +999,16 @@
                 document.getElementById('step1').classList.add('completed');
                 document.getElementById('step2').classList.add('active');
                 
-                const time = new Date(now.getTime() + 120000);
+                const time = new Date(now.getTime() + 30000); // 30 seconds
                 document.getElementById('time2').textContent = formatTime(time);
                 
-                // Show notification
-                alert('Your order is being prepared! Chefs are working on your delicious meal');
+                // Update map to show preparation stage
+                updateDeliveryMap(progress);
                 
-                // Next update after 2 minutes (120000ms)
+                // Show notification
+                showNotification('Your order is being prepared! Chefs are working on your delicious meal');
+                
+                // Next update after 30 seconds (30000ms)
                 setTimeout(() => {
                     progress = 66;
                     document.getElementById('progressBar').style.width = `${progress}%`;
@@ -833,13 +1016,16 @@
                     document.getElementById('step2').classList.add('completed');
                     document.getElementById('step3').classList.add('active');
                     
-                    const deliveryTime = new Date(time.getTime() + 120000);
+                    const deliveryTime = new Date(time.getTime() + 30000); // 30 seconds
                     document.getElementById('time3').textContent = formatTime(deliveryTime);
                     
-                    // Show notification
-                    alert('Your order is on the way! Our delivery partner is bringing your food');
+                    // Update map to show delivery in progress
+                    updateDeliveryMap(progress);
                     
-                    // Final update after 3 minutes (180000ms)
+                    // Show notification
+                    showNotification('Your order is on the way! Our delivery partner is bringing your food');
+                    
+                    // Final update after 60 seconds (60000ms) - reduced from 3 minutes
                     setTimeout(() => {
                         progress = 100;
                         document.getElementById('progressBar').style.width = `${progress}%`;
@@ -847,15 +1033,51 @@
                         document.getElementById('step3').classList.add('completed');
                         document.getElementById('step4').classList.add('active');
                         
-                        const deliveredTime = new Date(deliveryTime.getTime() + 180000);
+                        const deliveredTime = new Date(deliveryTime.getTime() + 60000); // 60 seconds
                         document.getElementById('time4').textContent = formatTime(deliveredTime);
                         
-                        // Show notification
-                        alert('Order Delivered! Your food has arrived. Enjoy your meal!');
+                        // Update map to show delivery completed
+                        updateDeliveryMap(progress);
                         
-                    }, 180000); // 3 minutes
-                }, 120000); // 2 minutes
-            }, 120000); // 2 minutes
+                        // Show notification
+                        showNotification('Order Delivered! Your food has arrived. Enjoy your meal!');
+                        
+                    }, 60000); // 60 seconds (1 minute)
+                }, 30000); // 30 seconds
+            }, 30000); // 30 seconds
+
+            // Show custom notification instead of alert
+            function showNotification(message) {
+                // Remove any existing notifications
+                const existingNotification = document.querySelector('.tracking-notification');
+                if (existingNotification) {
+                    existingNotification.remove();
+                }
+                
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = 'tracking-notification';
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="fas fa-bell"></i>
+                        <div>
+                            <h4>Delivery Update</h4>
+                            <p>${message}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to document
+                document.body.appendChild(notification);
+                
+                // Remove after 5 seconds
+                setTimeout(() => {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500);
+                }, 5000);
+            }
         }
         
         // Format time as HH:MM AM/PM
@@ -899,5 +1121,38 @@
             trackOrder();
         });
     </script>
+    // For testing - add a button to speed up the simulation
+    document.addEventListener('DOMContentLoaded', function() {
+        const orderContainer = document.querySelector('.order-container');
+        
+        // Create test controls
+        const testControls = document.createElement('div');
+        testControls.style.marginTop = '20px';
+        testControls.style.textAlign = 'center';
+        testControls.innerHTML = `
+            <button id="testButton" style="background: var(--dark); color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">
+                Speed Up Simulation (Test Mode)
+            </button>
+        `;
+        
+        orderContainer.appendChild(testControls);
+        
+        // Add event listener
+        document.getElementById('testButton').addEventListener('click', function() {
+            // Override setTimeout to use shorter times for testing
+            const originalSetTimeout = window.setTimeout;
+            window.setTimeout = function(callback, time) {
+                // Reduce all timeouts to 1/10th of original time
+                return originalSetTimeout(callback, time / 10);
+            };
+            
+            // Restart tracking
+            trackOrder();
+            
+            // Disable button after click
+            this.disabled = true;
+            this.textContent = 'Simulation Accelerated';
+        });
+    });
 </body>
 </html>
