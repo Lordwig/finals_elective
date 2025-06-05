@@ -6,6 +6,7 @@
     <title>Crave Cart - Your Cart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         /* Global Styles - Consistent with menu.html */
         :root {
@@ -525,15 +526,14 @@
     </nav>
 
     <!-- Cart Header -->
-    <section class="cart-header">
-        <div>
-            <h1>Your Cart</h1>
+    <div class="cart-header parallax">
+        <div class="container">
+            <h1 class="fade-in">Your Cart</h1>
+            <p class="fade-in" style="animation-delay: 0.2s;">Review your items before checkout</p>
         </div>
-    </section>
+    </div>
 
     <div class="container">
-        <!-- Promo Banner -->
- <div class="container">
         <!-- Promo Banner -->
         <div class="promo-banner">
             <i class="fas fa-tag"></i> Free delivery on orders over $15! Add <span id="amount-needed">$0.00</span> more to qualify.
@@ -562,34 +562,38 @@
         </section>
 
         <!-- Cart Items -->
-        <div class="cart-items" id="cartItems">
-            <p class="empty-cart-message">Your cart is empty. <a href="menu.html">Browse our menu</a> to add items.</p>
-        </div>
-        
-        <!-- Cart Summary -->
-        <div class="cart-summary" id="cartSummary" style="display: none;">
-            <div class="summary-row">
-                <span>Subtotal:</span>
-                <span id="subtotal">$0.00</span>
+        <section class="cart-section content-container">
+            <div class="container">
+                <div id="cartItems" class="stagger-container">
+                    <p class="empty-cart-message">Your cart is empty. <a href="menu.html">Browse our menu</a> to add items.</p>
+                </div>
+                
+                <!-- Cart Summary -->
+                <div id="cartSummary" class="cart-summary fade-in">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (8%):</span>
+                        <span id="tax">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee:</span>
+                        <span id="delivery-fee">$2.99</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total:</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                </div>
+                
+                <!-- Checkout Button -->
+                <button class="btn checkout-btn" id="checkoutBtn" style="display: none;">
+                    <i class="fas fa-lock"></i> Place Order
+                </button>
             </div>
-            <div class="summary-row">
-                <span>Tax (8%):</span>
-                <span id="tax">$0.00</span>
-            </div>
-            <div class="summary-row">
-                <span>Delivery Fee:</span>
-                <span id="delivery-fee">$2.99</span>
-            </div>
-            <div class="summary-row">
-                <span>Total:</span>
-                <span id="total">$0.00</span>
-            </div>
-        </div>
-        
-        <!-- Checkout Button -->
-        <button class="btn checkout-btn" id="checkoutBtn" style="display: none;">
-            <i class="fas fa-lock"></i> Place Order
-        </button>
+        </section>
     </div>
 
     <!-- Footer -->
@@ -614,11 +618,11 @@
                         <li><a href="/feedback">Feedback</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+            <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, San Francisco</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, Mataas na lupa,</p>
                     <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                    <p><i class="fas fa-envelope"></i> info@cravecart.com</p>
+                    <p><i class="fas fa-envelope"></i> ordernow@cravecart.com</p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>

@@ -274,10 +274,40 @@
             transition: all 0.2s ease;
         }
         
-        .rating label:hover,
-        .rating label:hover ~ label,
         .rating input:checked ~ label {
+            color: #ddd;
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ddd;
+        }
+
+        .rating input:checked + label {
             color: var(--accent);
+        }
+
+        .rating input#star1:checked ~ label[for="star1"],
+        .rating input#star2:checked ~ label[for="star1"],
+        .rating input#star2:checked ~ label[for="star2"],
+        .rating input#star3:checked ~ label[for="star1"],
+        .rating input#star3:checked ~ label[for="star2"],
+        .rating input#star3:checked ~ label[for="star3"],
+        .rating input#star4:checked ~ label[for="star1"],
+        .rating input#star4:checked ~ label[for="star2"],
+        .rating input#star4:checked ~ label[for="star3"],
+        .rating input#star4:checked ~ label[for="star4"],
+        .rating input#star5:checked ~ label[for="star1"],
+        .rating input#star5:checked ~ label[for="star2"],
+        .rating input#star5:checked ~ label[for="star3"],
+        .rating input#star5:checked ~ label[for="star4"],
+        .rating input#star5:checked ~ label[for="star5"] {
+            color: var(--accent);
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: var(--accent) !important;
         }
         
         .submit-btn {
@@ -504,20 +534,20 @@
                     <div class="form-group"> 
                         <label>How would you rate your experience?</label>
                         <div class="rating">
-                            <input type="radio" id="star5" name="rating" value="5">
-                            <label for="star5"><i class="fas fa-star"></i></label>
-                            
-                            <input type="radio" id="star4" name="rating" value="4">
-                            <label for="star4"><i class="fas fa-star"></i></label>
-                            
-                            <input type="radio" id="star3" name="rating" value="3">
-                            <label for="star3"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1"><i class="fas fa-star"></i></label>
                             
                             <input type="radio" id="star2" name="rating" value="2">
                             <label for="star2"><i class="fas fa-star"></i></label>
                             
-                            <input type="radio" id="star1" name="rating" value="1">
-                            <label for="star1"><i class="fas fa-star"></i></label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3"><i class="fas fa-star"></i></label>
+                            
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4"><i class="fas fa-star"></i></label>
+                            
+                            <input type="radio" id="star5" name="rating" value="5">
+                            <label for="star5"><i class="fas fa-star"></i></label>
                         </div>
                     </div>
                     
@@ -562,9 +592,9 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, San Francisco</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, Mataas na lupa,</p>
                     <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                    <p><i class="fas fa-envelope"></i> info@cravecart.com</p>
+                    <p><i class="fas fa-envelope"></i> ordernow@cravecart.com</p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
@@ -631,6 +661,61 @@
                     console.error('Error:', error);
                     alert('Submission error. Check console for details.');
                 });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Star rating functionality
+            const stars = document.querySelectorAll('.rating input');
+            const starLabels = document.querySelectorAll('.rating label');
+            
+            // Clear all stars
+            function clearStars() {
+                starLabels.forEach(label => {
+                    label.style.color = '#ddd';
+                });
+            }
+            
+            // Fill stars up to the selected one
+            function fillStars(rating) {
+                clearStars();
+                for (let i = 0; i < rating; i++) {
+                    starLabels[i].style.color = 'var(--accent)';
+                }
+            }
+            
+            // Add event listeners to stars
+            stars.forEach((star, index) => {
+                star.addEventListener('change', function() {
+                    fillStars(parseInt(this.value));
+                });
+                
+                // Hover effects
+                starLabels[index].addEventListener('mouseenter', function() {
+                    clearStars();
+                    for (let i = 0; i <= index; i++) {
+                        starLabels[i].style.color = 'var(--accent)';
+                    }
+                });
+                
+                starLabels[index].addEventListener('mouseleave', function() {
+                    const checkedStar = document.querySelector('.rating input:checked');
+                    if (checkedStar) {
+                        fillStars(parseInt(checkedStar.value));
+                    } else {
+                        clearStars();
+                    }
+                });
+            });
+            
+            // Rating container mouse leave
+            document.querySelector('.rating').addEventListener('mouseleave', function() {
+                const checkedStar = document.querySelector('.rating input:checked');
+                if (checkedStar) {
+                    fillStars(parseInt(checkedStar.value));
+                } else {
+                    clearStars();
+                }
             });
         });
     </script>
