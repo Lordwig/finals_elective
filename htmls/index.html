@@ -486,7 +486,69 @@
             background: rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
         }
-        
+
+        /* Subtle Moving Background Animation */
+        @keyframes gentleFloat {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: translateX(10px) translateY(-15px) scale(1.02);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px) scale(0.98);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateX(-10px) translateY(5px) scale(1.01);
+                opacity: 0.85;
+            }
+        }
+
+        /* Food-themed floating elements for home page */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(255, 107, 107, 0.02) 0%, transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(255, 179, 71, 0.02) 0%, transparent 35%),
+                radial-gradient(circle at 50% 50%, rgba(76, 175, 80, 0.015) 0%, transparent 25%),
+                radial-gradient(circle at 25% 75%, rgba(255, 193, 7, 0.01) 0%, transparent 20%),
+                radial-gradient(circle at 75% 25%, rgba(156, 39, 176, 0.008) 0%, transparent 15%);
+            pointer-events: none;
+            z-index: -1;
+            animation: foodFloat 30s ease-in-out infinite;
+        }
+
+        @keyframes foodFloat {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            20% {
+                transform: translateX(15px) translateY(-20px) rotate(2deg) scale(1.03);
+                opacity: 0.6;
+            }
+            40% {
+                transform: translateX(-10px) translateY(-15px) rotate(-1deg) scale(0.97);
+                opacity: 0.7;
+            }
+            60% {
+                transform: translateX(-20px) translateY(10px) rotate(1.5deg) scale(1.02);
+                opacity: 0.5;
+            }
+            80% {
+                transform: translateX(8px) translateY(18px) rotate(-0.5deg) scale(0.98);
+                opacity: 0.6;
+            }
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .hero h1 {
@@ -695,10 +757,10 @@
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>

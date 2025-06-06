@@ -372,6 +372,97 @@
             justify-content: center;
             gap: 10px;
         }
+
+        /* Voucher Code Section */
+        .voucher-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05), rgba(255, 179, 71, 0.05));
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px dashed rgba(255, 107, 107, 0.2);
+        }
+
+        .voucher-section h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .voucher-section h3 i {
+            color: var(--primary);
+        }
+
+        .voucher-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .voucher-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .voucher-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .voucher-btn {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .voucher-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .voucher-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .voucher-status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voucher-status.success {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .voucher-status.error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .discount-row {
+            color: var(--success);
+            font-weight: 600;
+        }
         
         /* Footer */
         .main-footer {
@@ -451,7 +542,65 @@
             background: rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
         }
-        
+
+        /* Subtle Moving Background Animation */
+        @keyframes gentleFloat {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: translateX(10px) translateY(-15px) scale(1.02);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px) scale(0.98);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateX(-10px) translateY(5px) scale(1.01);
+                opacity: 0.85;
+            }
+        }
+
+        /* Cart-themed shopping bubbles */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 25%, rgba(76, 175, 80, 0.025) 0%, transparent 30%),
+                radial-gradient(circle at 80% 75%, rgba(255, 179, 71, 0.02) 0%, transparent 35%),
+                radial-gradient(circle at 45% 15%, rgba(255, 107, 107, 0.018) 0%, transparent 25%),
+                radial-gradient(circle at 15% 70%, rgba(33, 150, 243, 0.015) 0%, transparent 28%),
+                radial-gradient(circle at 75% 40%, rgba(156, 39, 176, 0.012) 0%, transparent 22%);
+            pointer-events: none;
+            z-index: -1;
+            animation: cartFlow 28s ease-in-out infinite;
+        }
+
+        @keyframes cartFlow {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateX(20px) translateY(-15px) scale(1.05);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateX(-12px) translateY(-25px) scale(0.95);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateX(-25px) translateY(12px) scale(1.03);
+                opacity: 0.3;
+            }
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .cart-item {
@@ -567,7 +716,20 @@
                 <div id="cartItems" class="stagger-container">
                     <p class="empty-cart-message">Your cart is empty. <a href="menu.html">Browse our menu</a> to add items.</p>
                 </div>
-                
+
+                <!-- Voucher Code Section -->
+                <div id="voucherSection" class="voucher-section" style="display: none;">
+                    <h3><i class="fas fa-ticket-alt"></i> Have a Voucher Code?</h3>
+                    <div class="voucher-input-group">
+                        <input type="text" id="voucherInput" class="voucher-input" placeholder="Enter voucher code" maxlength="20">
+                        <button id="applyVoucherBtn" class="voucher-btn">Apply</button>
+                    </div>
+                    <div id="voucherStatus" class="voucher-status">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="voucherMessage"></span>
+                    </div>
+                </div>
+
                 <!-- Cart Summary -->
                 <div id="cartSummary" class="cart-summary fade-in">
                     <div class="summary-row">
@@ -581,6 +743,10 @@
                     <div class="summary-row">
                         <span>Delivery Fee:</span>
                         <span id="delivery-fee">$2.99</span>
+                    </div>
+                    <div id="discountRow" class="summary-row discount-row" style="display: none;">
+                        <span>Discount (10%):</span>
+                        <span id="discount-amount">-$0.00</span>
                     </div>
                     <div class="summary-row">
                         <span>Total:</span>
@@ -627,10 +793,10 @@
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -648,7 +814,80 @@
             const cartSummary = document.getElementById('cartSummary');
             const checkoutBtn = document.getElementById('checkoutBtn');
             const cartCountElement = document.getElementById('cart-count');
-            
+
+            // Voucher functionality
+            let appliedVoucher = null;
+            const voucherSection = document.getElementById('voucherSection');
+            const voucherInput = document.getElementById('voucherInput');
+            const applyVoucherBtn = document.getElementById('applyVoucherBtn');
+            const voucherStatus = document.getElementById('voucherStatus');
+            const voucherMessage = document.getElementById('voucherMessage');
+            const discountRow = document.getElementById('discountRow');
+
+            // Simple alert function
+            function showAlert(message) {
+                alert(message);
+            }
+
+            // Voucher validation and application
+            function applyVoucher() {
+                const voucherCode = voucherInput.value.trim().toLowerCase();
+
+                if (!voucherCode) {
+                    showVoucherStatus('error', 'Please enter a voucher code.');
+                    return;
+                }
+
+                // Check if voucher is valid (case-insensitive)
+                if (voucherCode === 'voucher') {
+                    if (appliedVoucher) {
+                        showVoucherStatus('error', 'A voucher is already applied.');
+                        return;
+                    }
+
+                    appliedVoucher = {
+                        code: 'voucher',
+                        discount: 0.10, // 10% discount
+                        description: '10% Off'
+                    };
+
+                    showVoucherStatus('success', `Voucher applied! You saved 10% on your order.`);
+                    voucherInput.disabled = true;
+                    applyVoucherBtn.disabled = true;
+                    applyVoucherBtn.textContent = 'Applied';
+
+                    // Recalculate totals
+                    displayCartItems();
+
+                    showAlert('Voucher "voucher" applied successfully! You get 10% off your order.');
+                } else {
+                    showVoucherStatus('error', 'Invalid voucher code. Try "voucher" for 10% off!');
+                }
+            }
+
+            function showVoucherStatus(type, message) {
+                voucherStatus.className = `voucher-status ${type}`;
+                voucherMessage.textContent = message;
+                voucherStatus.style.display = 'flex';
+
+                if (type === 'success') {
+                    voucherStatus.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    voucherStatus.querySelector('i').className = 'fas fa-exclamation-circle';
+                }
+            }
+
+            function removeVoucher() {
+                appliedVoucher = null;
+                voucherInput.disabled = false;
+                voucherInput.value = '';
+                applyVoucherBtn.disabled = false;
+                applyVoucherBtn.textContent = 'Apply';
+                voucherStatus.style.display = 'none';
+                displayCartItems();
+                showAlert('Voucher removed successfully.');
+            }
+
             // Update cart count in navigation
             function updateCartCount() {
                 const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -689,8 +928,11 @@
                     cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty. <a href="menu.html">Browse our menu</a> to add items.</p>';
                     document.getElementById('cartSummary').style.display = 'none';
                     document.getElementById('checkoutBtn').style.display = 'none';
+                    document.getElementById('voucherSection').style.display = 'none';
                     return;
-                }   
+                } else {
+                    document.getElementById('voucherSection').style.display = 'block';
+                }
     
                 cartItemsContainer.innerHTML = '';
                 let subtotal = 0;
@@ -706,6 +948,7 @@
                             <img src="${item.imageUrl}" alt="${item.name}">
                             <div class="cart-item-details">
                                 <h3>${item.name}</h3>
+                                ${item.orderName ? `<p style="color: var(--primary); font-weight: 600; margin: 5px 0;"><i class="fas fa-user"></i> For: ${item.orderName}</p>` : ''}
                                 <span class="cart-item-price">$${item.price.toFixed(2)}</span>
                             </div>
                         </div>
@@ -723,13 +966,24 @@
                 // Calculate totals
                 const tax = subtotal * 0.08;
                 const deliveryFee = checkFreeDelivery(subtotal);
-                const total = subtotal + tax + deliveryFee;
-                
+
+                // Apply voucher discount if available
+                let discount = 0;
+                if (appliedVoucher) {
+                    discount = subtotal * appliedVoucher.discount;
+                    discountRow.style.display = 'flex';
+                    document.getElementById('discount-amount').textContent = `-$${discount.toFixed(2)}`;
+                } else {
+                    discountRow.style.display = 'none';
+                }
+
+                const total = subtotal + tax + deliveryFee - discount;
+
                 // Update summary
                 document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
                 document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
                 document.getElementById('total').textContent = `$${total.toFixed(2)}`;
-                
+
                 cartSummary.style.display = 'block';
                 checkoutBtn.style.display = 'block';
             }
@@ -781,7 +1035,9 @@
                     items: [...cart],
                     date: new Date().toISOString(),
                     total: orderTotal,
-                    status: 'Preparing'
+                    status: 'Preparing',
+                    voucher: appliedVoucher ? appliedVoucher.code : null,
+                    discount: appliedVoucher ? (parseFloat(orderTotal.replace('$', '')) * appliedVoucher.discount / (1 - appliedVoucher.discount)).toFixed(2) : 0
                 });
                 localStorage.setItem('orders', JSON.stringify(orders));
                 
@@ -797,6 +1053,28 @@
                 }
             });
             
+            // Voucher event listeners
+            applyVoucherBtn.addEventListener('click', applyVoucher);
+
+            voucherInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    applyVoucher();
+                }
+            });
+
+            // Add remove voucher button functionality
+            voucherStatus.addEventListener('click', function() {
+                if (appliedVoucher && voucherStatus.classList.contains('success')) {
+                    if (confirm('Remove applied voucher?')) {
+                        removeVoucher();
+                    }
+                }
+            });
+
+            // Make success voucher status clickable
+            voucherStatus.style.cursor = 'pointer';
+            voucherStatus.title = 'Click to remove voucher';
+
             // Initialize cart display
             displayCartItems();
         });

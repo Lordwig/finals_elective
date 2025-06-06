@@ -481,7 +481,74 @@
             background: rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
         }
-        
+
+        /* Subtle Moving Background Animation */
+        @keyframes gentleFloat {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: translateX(10px) translateY(-15px) scale(1.02);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px) scale(0.98);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateX(-10px) translateY(5px) scale(1.01);
+                opacity: 0.85;
+            }
+        }
+
+        /* Menu-themed ingredient bubbles */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 10% 15%, rgba(255, 107, 107, 0.025) 0%, transparent 25%),
+                radial-gradient(circle at 90% 85%, rgba(255, 179, 71, 0.02) 0%, transparent 30%),
+                radial-gradient(circle at 30% 60%, rgba(76, 175, 80, 0.018) 0%, transparent 28%),
+                radial-gradient(circle at 70% 20%, rgba(255, 152, 0, 0.015) 0%, transparent 22%),
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.012) 0%, transparent 18%),
+                radial-gradient(circle at 80% 50%, rgba(255, 87, 34, 0.01) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+            animation: ingredientDrift 35s ease-in-out infinite;
+        }
+
+        @keyframes ingredientDrift {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 0.7;
+            }
+            16% {
+                transform: translateX(12px) translateY(-25px) scale(1.04);
+                opacity: 0.5;
+            }
+            33% {
+                transform: translateX(-8px) translateY(-18px) scale(0.96);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateX(-18px) translateY(8px) scale(1.02);
+                opacity: 0.4;
+            }
+            66% {
+                transform: translateX(6px) translateY(22px) scale(0.98);
+                opacity: 0.5;
+            }
+            83% {
+                transform: translateX(14px) translateY(-5px) scale(1.01);
+                opacity: 0.6;
+            }
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .menu-header h1 {
@@ -766,10 +833,10 @@
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -779,6 +846,82 @@
         </div>
     </footer>
 
+    <script>
+        // Enhanced alert functions with validation
+        let userName = '';
+
+        // Simple alert function
+        function showAlert(message) {
+            alert(message);
+        }
+
+        // Function to get user name with validation
+        function getUserName() {
+            let name = '';
+            let isValidName = false;
+
+            while (!isValidName) {
+                name = prompt("Welcome to Crave Cart! Please enter your name to personalize your experience:");
+
+                // Check if user cancelled
+                if (name === null) {
+                    showAlert("Name is required to continue with your order.");
+                    continue;
+                }
+
+                // Trim whitespace
+                name = name.trim();
+
+                // Validation checks
+                if (name === '') {
+                    showAlert("Please enter a valid name. Name cannot be empty.");
+                } else if (name.length < 2) {
+                    showAlert("Please enter a name with at least 2 characters.");
+                } else if (name.length > 50) {
+                    showAlert("Please enter a name with less than 50 characters.");
+                } else if (!/^[a-zA-Z\s'-]+$/.test(name)) {
+                    showAlert("Please enter a valid name using only letters, spaces, hyphens, and apostrophes.");
+                } else if (/^\s+$/.test(name)) {
+                    showAlert("Please enter a valid name, not just spaces.");
+                } else {
+                    // Name is valid
+                    isValidName = true;
+                    userName = name;
+                    // Store name in localStorage for other pages
+                    localStorage.setItem('userName', userName);
+                }
+            }
+
+            return userName;
+        }
+
+        // Function to show personalized welcome message
+        function showPersonalizedWelcome() {
+            if (userName) {
+                showAlert(`Welcome to our menu, ${userName}! Browse our delicious selection and add items to your cart.`);
+            } else {
+                showAlert("Welcome to our menu! Browse our delicious selection and add items to your cart.");
+            }
+        }
+
+        // Function to show personalized add to cart message
+        function showPersonalizedAddToCart(itemName) {
+            if (userName) {
+                showAlert(`Great choice, ${userName}! ${itemName} has been added to your cart.`);
+            } else {
+                showAlert(`${itemName} has been added to your cart.`);
+            }
+        }
+
+        // Function to show personalized checkout message
+        function showPersonalizedCheckout() {
+            if (userName) {
+                showAlert(`Thank you, ${userName}! Redirecting you to checkout to complete your order.`);
+            } else {
+                showAlert("Redirecting you to checkout to complete your order.");
+            }
+        }
+    </script>
     <script>
         // Cart functionality
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -800,34 +943,69 @@
         function addToCart(itemName, itemPrice, quantityId, imageUrl) {
             const quantity = parseInt(document.getElementById(quantityId).textContent);
             const totalPrice = itemPrice * quantity;
-            
+
+            // Prompt for unique order name every time
+            let orderName = '';
+            let isValidName = false;
+
+            while (!isValidName) {
+                orderName = prompt(`Who is this order for?\n\nItem: ${itemName} (${quantity}x)\nTotal: $${totalPrice.toFixed(2)}\n\nPlease enter the name for this order:`);
+
+                // Check if user cancelled
+                if (orderName === null) {
+                    showAlert("Order cancelled. Please enter a name to add items to your cart.");
+                    return; // Exit function if cancelled
+                }
+
+                // Trim whitespace
+                orderName = orderName.trim();
+
+                // Validation checks
+                if (orderName === '') {
+                    showAlert("Please enter a valid name. Name cannot be empty.");
+                } else if (orderName.length < 2) {
+                    showAlert("Please enter a name with at least 2 characters.");
+                } else if (orderName.length > 50) {
+                    showAlert("Please enter a name with less than 50 characters.");
+                } else if (!/^[a-zA-Z\s'-]+$/.test(orderName)) {
+                    showAlert("Please enter a valid name using only letters, spaces, hyphens, and apostrophes.");
+                } else if (/^\s+$/.test(orderName)) {
+                    showAlert("Please enter a valid name, not just spaces.");
+                } else {
+                    // Name is valid
+                    isValidName = true;
+                }
+            }
+
             // Check if item already exists in cart
             const existingItemIndex = cart.findIndex(item => item.name === itemName);
-            
+
             if (existingItemIndex !== -1) {
                 // Update existing item
                 cart[existingItemIndex].quantity += quantity;
                 cart[existingItemIndex].totalPrice += totalPrice;
+                cart[existingItemIndex].orderName = orderName; // Update with new order name
             } else {
-                // Add new item
+                // Add new item with order name
                 cart.push({
                     name: itemName,
                     price: itemPrice,
                     quantity: quantity,
                     totalPrice: totalPrice,
-                    imageUrl: imageUrl
+                    imageUrl: imageUrl,
+                    orderName: orderName // Store the unique order name
                 });
             }
-            
+
             // Save to localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Show success message
-            alert(`${quantity} ${itemName}(s) added to cart!\nTotal: $${totalPrice.toFixed(2)}`);
-            
+
+            // Show personalized success message with order name
+            showAlert(`Perfect! ${orderName}'s order has been added to the cart:\n\n${quantity}x ${itemName}\nTotal: $${totalPrice.toFixed(2)}\n\nThank you for choosing Crave Cart!`);
+
             // Reset quantity to 1
             document.getElementById(quantityId).textContent = "1";
-            
+
             // Update cart count
             updateCartCount();
         }
@@ -873,6 +1051,10 @@
         // Initialize cart count on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
+
+            // Always get user name when menu page loads (automatic alert)
+            getUserName();
+            showPersonalizedWelcome();
         });
     </script>
     <script>

@@ -14,7 +14,7 @@
             --dark: #333;
             --light: #fff;
             --gray: #f5f5f5;
-            --accent: #ffb347;
+            --accent: #ffb347;  
             --text: #555;
             --success: #4CAF50;
             --warning: #FFC107;
@@ -31,6 +31,7 @@
             color: var(--text);
             line-height: 1.6;
             background-color: var(--light);
+            position: relative;
         }
         
         a {
@@ -46,6 +47,32 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+        }
+
+        /* Subtle decorative elements */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 100px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.05), rgba(255, 179, 71, 0.05));
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: 200px;
+            left: -30px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, rgba(76, 175, 80, 0.05), rgba(255, 179, 71, 0.05));
+            border-radius: 50%;
+            z-index: -1;
         }
         
         .btn {
@@ -153,24 +180,57 @@
         /* Feedback Header */
         .feedback-header {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5') no-repeat center center/cover;
-            height: 250px;
+            height: 280px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: var(--light);
             margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
         }
-        
+
         .feedback-header h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .feedback-header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
         
         /* Persistent Coca-Cola Ads Section */
         .persistent-ads {
             margin: 40px 0;
             display: block !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(248, 249, 250, 0.8));
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .persistent-ads::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            border-radius: 20px 20px 0 0;
         }
         
         .ads-grid {
@@ -203,23 +263,71 @@
             flex-direction: column;
             align-items: center;
             margin: 40px 0;
+            position: relative;
         }
-        
+
+        .feedback-container::before {
+            content: '💬';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 2rem;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .feedback-container::after {
+            content: '⭐';
+            position: absolute;
+            bottom: 100px;
+            right: 30px;
+            font-size: 1.5rem;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
         .feedback-form {
-            background: var(--light);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
             margin-bottom: 40px;
+            border: 2px solid rgba(255, 107, 107, 0.1);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .feedback-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+        }
+
         .feedback-form h2 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 10px;
             color: var(--dark);
             text-align: center;
+            position: relative;
+        }
+
+        .feedback-form .welcome-text {
+            text-align: center;
+            color: var(--text);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .feedback-form .welcome-text i {
+            color: var(--primary);
+            margin-right: 8px;
         }
         
         .form-group {
@@ -236,19 +344,22 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
         }
-        
+
         .form-group input:focus,
         .form-group textarea:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15);
+            background: white;
+            transform: translateY(-2px);
         }
         
         .form-group textarea {
@@ -317,31 +428,400 @@
         
         /* Feedback Summary */
         .feedback-summary {
-            background: var(--light);
-            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 600px;
             width: 100%;
             margin-bottom: 40px;
             display: none;
+            border: 2px solid rgba(255, 107, 107, 0.1);
         }
-        
+
         .feedback-summary i {
             font-size: 4rem;
             color: var(--success);
             margin-bottom: 20px;
+            animation: pulse 2s infinite;
         }
-        
+
         .feedback-summary h2 {
             font-size: 1.8rem;
             margin-bottom: 15px;
             color: var(--dark);
         }
-        
+
         .feedback-summary p {
             margin-bottom: 15px;
+        }
+
+        /* Feedback Importance Section */
+        .feedback-importance {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.9));
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            width: 100%;
+            margin-top: 40px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feedback-importance::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success), var(--primary), var(--accent));
+            border-radius: 20px 20px 0 0;
+        }
+
+        .feedback-importance h3 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .importance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .importance-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 249, 250, 0.6));
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .importance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .importance-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .importance-card h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .importance-card p {
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Feedback Stats */
+        .feedback-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05), rgba(255, 179, 71, 0.05));
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px dashed rgba(255, 107, 107, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Textual Analysis Section */
+        .analysis-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .analysis-section h4 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .sentiment-analysis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .sentiment-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .sentiment-item.positive {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+            border: 2px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .sentiment-item.neutral {
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.1), rgba(255, 179, 71, 0.05));
+            border: 2px solid rgba(255, 179, 71, 0.2);
+        }
+
+        .sentiment-item.negative {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.05));
+            border: 2px solid rgba(244, 67, 54, 0.2);
+        }
+
+        .sentiment-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .sentiment-item.positive .sentiment-icon {
+            color: var(--success);
+        }
+
+        .sentiment-item.neutral .sentiment-icon {
+            color: var(--accent);
+        }
+
+        .sentiment-item.negative .sentiment-icon {
+            color: #f44336;
+        }
+
+        .sentiment-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sentiment-label {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .keywords-section {
+            margin-top: 20px;
+        }
+
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .keyword-tag {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .keyword-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+
+        .no-analysis {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .feedback-display h3 {
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .feedback-display h3::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .feedback-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.8));
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .feedback-item::before {
+            content: '"';
+            position: absolute;
+            top: -5px;
+            left: 15px;
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: serif;
+        }
+
+        .feedback-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            border-left-color: var(--accent);
+        }
+
+        .feedback-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .feedback-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .feedback-rating {
+            display: flex;
+            gap: 3px;
+        }
+
+        .feedback-rating i {
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .feedback-date {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .feedback-comment {
+            color: var(--text);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .no-feedback {
+            text-align: center;
+            color: var(--text);
+            opacity: 0.7;
+            padding: 50px;
+            font-style: italic;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.02), rgba(255, 179, 71, 0.02));
+            border-radius: 15px;
+            border: 2px dashed rgba(255, 107, 107, 0.1);
+        }
+
+        .no-feedback i {
+            animation: gentle-bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Subtle floating decorations */
+        .floating-decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+        }
+
+        .floating-decoration:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation: float-1 8s ease-in-out infinite;
+        }
+
+        .floating-decoration:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation: float-2 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float-1 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        @keyframes float-2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(-180deg); }
         }
         
         /* Footer */
@@ -437,7 +917,264 @@
             background: rgba(0, 0, 0, 0.2);
             font-size: 0.9rem;
         }
-        
+
+        /* Subtle Moving Background Animation */
+        @keyframes gentleFloat {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: translateX(10px) translateY(-15px) scale(1.02);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px) scale(0.98);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translateX(-10px) translateY(5px) scale(1.01);
+                opacity: 0.85;
+            }
+        }
+
+        /* Feedback-themed star bubbles */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 18% 25%, rgba(255, 193, 7, 0.02) 0%, transparent 30%),
+                radial-gradient(circle at 82% 75%, rgba(76, 175, 80, 0.018) 0%, transparent 28%),
+                radial-gradient(circle at 35% 10%, rgba(255, 107, 107, 0.015) 0%, transparent 25%),
+                radial-gradient(circle at 65% 90%, rgba(156, 39, 176, 0.012) 0%, transparent 22%),
+                radial-gradient(circle at 50% 50%, rgba(255, 179, 71, 0.01) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+            animation: starGlow 32s ease-in-out infinite;
+        }
+
+        @keyframes starGlow {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 0.6;
+            }
+            20% {
+                transform: translateX(8px) translateY(-12px) scale(1.08);
+                opacity: 0.8;
+            }
+            40% {
+                transform: translateX(-6px) translateY(-8px) scale(0.92);
+                opacity: 0.4;
+            }
+            60% {
+                transform: translateX(-12px) translateY(6px) scale(1.05);
+                opacity: 0.7;
+            }
+            80% {
+                transform: translateX(4px) translateY(10px) scale(0.95);
+                opacity: 0.5;
+            }
+        }
+
+        /* Interactive Feedback Hover Spot */
+        .feedback-hover-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feedback-hover-label {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.9));
+            color: var(--dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .feedback-hover-container:hover .feedback-hover-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feedback-hover-spot {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.6rem;
+        }
+
+        .feedback-hover-spot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .feedback-hover-spot.active {
+            background: linear-gradient(135deg, var(--success), var(--primary));
+        }
+
+        /* Feedback Preview Popup */
+        .feedback-preview {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 420px;
+            max-height: 500px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.9));
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.4s ease;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .feedback-preview.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .feedback-preview.pinned {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .feedback-preview-header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .feedback-preview-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-preview-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .feedback-preview-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .feedback-preview-content {
+            padding: 25px;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .feedback-preview-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 249, 250, 0.6));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .feedback-preview-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-preview-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .feedback-preview-rating {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 8px;
+        }
+
+        .feedback-preview-rating i {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .feedback-preview-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .feedback-preview-comment {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .feedback-preview-date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .feedback-preview-empty {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        /* Pulse animation for the hover spot */
+        @keyframes pulse-spot {
+            0% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6); }
+            100% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3); }
+        }
+
+        .feedback-hover-spot.pulse {
+            animation: pulse-spot 2s ease-in-out infinite;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .feedback-header h1 {
@@ -457,10 +1194,99 @@
             .feedback-summary {
                 padding: 20px;
             }
+
+            .feedback-hover-container {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .feedback-hover-spot {
+                width: 55px;
+                height: 55px;
+                font-size: 1.4rem;
+            }
+
+            .feedback-hover-label {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .feedback-preview {
+                width: 320px;
+                bottom: 90px;
+                right: 20px;
+                max-height: 400px;
+            }
+
+            .feedback-preview-content {
+                padding: 20px;
+                max-height: 300px;
+            }
+
+            .feedback-preview-item {
+                padding: 15px;
+            }
+
+            .importance-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .feedback-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .sentiment-analysis {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .keywords-container {
+                gap: 8px;
+            }
+
+            .keyword-tag {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .analysis-section {
+                padding: 20px;
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Decorative Elements -->
+    <div class="floating-decoration">🍕</div>
+    <div class="floating-decoration">🌟</div>
+
+    <!-- Interactive Feedback Hover Spot -->
+    <div class="feedback-hover-container">
+        <div class="feedback-hover-label">Recent Reviews</div>
+        <div class="feedback-hover-spot" id="feedbackHoverSpot">
+            <i class="fas fa-comments"></i>
+        </div>
+    </div>
+
+    <!-- Feedback Preview Popup -->
+    <div class="feedback-preview" id="feedbackPreview">
+        <div class="feedback-preview-header">
+            <h3><i class="fas fa-star"></i> Recent Reviews</h3>
+            <button class="feedback-preview-close" id="feedbackPreviewClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="feedback-preview-content" id="feedbackPreviewContent">
+            <div class="feedback-preview-empty">
+                <i class="fas fa-comment-slash" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
+                <p>No feedback yet. Be the first to share your experience!</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Top Header Bar with Logo -->
     <div class="top-bar">
         <div class="header-logo-container">
@@ -520,6 +1346,10 @@
         <div class="feedback-container">
             <div class="feedback-form" id="feedbackForm">
                 <h2>Share Your Experience</h2>
+                <p class="welcome-text">
+                    <i class="fas fa-heart"></i>
+                    We'd love to hear about your experience! Your feedback helps us serve you better and create amazing moments for all our customers.
+                </p>
                 <form id="feedbackFormElement">
                     <div class="form-group">
                         <label for="name">Your Name (Optional)</label>
@@ -567,6 +1397,93 @@
                 <p>Your feedback helps us improve our service.</p>
                 <a href="index.html" class="btn">Back to Home</a>
             </div>
+
+            <!-- Why Your Feedback Matters Section -->
+            <div class="feedback-importance">
+                <h3><i class="fas fa-heart"></i> Why Your Feedback Matters</h3>
+                <div class="importance-grid">
+                    <div class="importance-card">
+                        <div class="importance-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Helps Us Improve</h4>
+                        <p>Your insights help us enhance our menu, service quality, and overall dining experience.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Guides Other Customers</h4>
+                        <p>Your reviews help fellow food lovers make informed decisions about their orders.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Recognizes Excellence</h4>
+                        <p>Positive feedback motivates our team and helps us celebrate what we're doing right.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Sparks Innovation</h4>
+                        <p>Your suggestions inspire new dishes, features, and improvements to our service.</p>
+                    </div>
+                </div>
+
+                <!-- Feedback Stats -->
+                <div class="feedback-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalFeedbacks">0</div>
+                        <div class="stat-label">Total Reviews</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="averageRating">0.0</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24h</div>
+                        <div class="stat-label">Response Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Read Rate</div>
+                    </div>
+                </div>
+
+                <!-- Textual Analysis Section -->
+                <div class="analysis-section" id="analysisSection" style="display: none;">
+                    <h4><i class="fas fa-brain"></i> Feedback Analysis</h4>
+
+                    <!-- Sentiment Analysis -->
+                    <div class="sentiment-analysis" id="sentimentAnalysis">
+                        <div class="sentiment-item positive">
+                            <div class="sentiment-icon">😊</div>
+                            <div class="sentiment-count" id="positiveCount">0</div>
+                            <div class="sentiment-label">Positive</div>
+                        </div>
+                        <div class="sentiment-item neutral">
+                            <div class="sentiment-icon">😐</div>
+                            <div class="sentiment-count" id="neutralCount">0</div>
+                            <div class="sentiment-label">Neutral</div>
+                        </div>
+                        <div class="sentiment-item negative">
+                            <div class="sentiment-icon">😞</div>
+                            <div class="sentiment-count" id="negativeCount">0</div>
+                            <div class="sentiment-label">Negative</div>
+                        </div>
+                    </div>
+
+                    <!-- Keywords Section -->
+                    <div class="keywords-section">
+                        <h4><i class="fas fa-tags"></i> Common Keywords</h4>
+                        <div class="keywords-container" id="keywordsContainer">
+                            <div class="no-analysis">No keywords available yet. Submit feedback to see analysis!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -599,10 +1516,10 @@
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -613,33 +1530,389 @@
     </footer>
 
     <script>
+        // Enhanced alert functions with validation
+        let userName = '';
+
+        // Simple alert function
+        function showAlert(message) {
+            alert(message);
+        }
+
+        // Get user name from localStorage
+        function getUserName() {
+            return localStorage.getItem('userName') || '';
+        }
+
+        // Show personalized thank you message
+        function showPersonalizedThankYou(feedbackName) {
+            const storedName = getUserName();
+            const displayName = feedbackName || storedName;
+
+            if (displayName && displayName.trim() !== '' && displayName !== 'Anonymous') {
+                showAlert(`Thank you so much, ${displayName}! Your feedback means the world to us and helps us improve our service. We truly appreciate you taking the time to share your experience!`);
+            } else {
+                showAlert('Thank you for your valuable feedback! Your input helps us improve our service and create better experiences for all our customers.');
+            }
+        }
+
+        // Feedback storage and display functions
+        let feedbackData = JSON.parse(localStorage.getItem('feedbackData')) || [];
+
+        function saveFeedback(feedback) {
+            feedbackData.unshift(feedback); // Add to beginning of array
+            localStorage.setItem('feedbackData', JSON.stringify(feedbackData));
+        }
+
+        function updateFeedbackStats() {
+            const totalFeedbacks = feedbackData.length;
+            const averageRating = totalFeedbacks > 0
+                ? (feedbackData.reduce((sum, feedback) => sum + feedback.rating, 0) / totalFeedbacks).toFixed(1)
+                : '0.0';
+
+            document.getElementById('totalFeedbacks').textContent = totalFeedbacks;
+            document.getElementById('averageRating').textContent = averageRating;
+        }
+
+        // Enhanced Textual Analysis Functions
+        function analyzeSentiment(text) {
+            const normalizedText = text.toLowerCase();
+
+            // Enhanced word lists with more comprehensive coverage
+            const positiveWords = ['excellent', 'amazing', 'great', 'fantastic', 'wonderful', 'perfect', 'love', 'best', 'awesome', 'delicious', 'outstanding', 'superb', 'brilliant', 'incredible', 'marvelous', 'good', 'nice', 'happy', 'satisfied', 'pleased', 'recommend', 'fresh', 'tasty', 'quality', 'fast', 'quick', 'friendly', 'helpful', 'clean', 'beautiful', 'lovely', 'enjoyable', 'impressive', 'exceptional', 'remarkable', 'splendid', 'magnificent', 'divine', 'heavenly', 'yummy', 'scrumptious', 'flavorful', 'tender', 'juicy', 'crispy', 'warm', 'hot', 'perfect', 'exactly', 'right', 'correct', 'accurate', 'timely', 'prompt', 'polite', 'courteous', 'professional', 'efficient'];
+
+            const negativeWords = ['terrible', 'awful', 'bad', 'horrible', 'disgusting', 'worst', 'hate', 'disappointing', 'poor', 'slow', 'cold', 'rude', 'dirty', 'expensive', 'overpriced', 'bland', 'tasteless', 'soggy', 'burnt', 'undercooked', 'late', 'wrong', 'missing', 'broken', 'unhappy', 'unsatisfied', 'complaint', 'problem', 'issue', 'nasty', 'gross', 'yuck', 'ew', 'ugh', 'sucks', 'suck', 'terrible', 'horrible', 'dreadful', 'appalling', 'atrocious', 'abysmal', 'pathetic', 'useless', 'worthless', 'garbage', 'trash', 'crap', 'shit', 'damn', 'hell', 'annoying', 'frustrating', 'irritating', 'disappointing', 'unsatisfactory', 'unacceptable', 'inadequate', 'insufficient', 'lacking', 'deficient', 'subpar', 'mediocre', 'inferior', 'lousy', 'crappy', 'shoddy', 'cheap', 'flavorless', 'stale', 'spoiled', 'rotten', 'moldy', 'sour', 'bitter', 'salty', 'greasy', 'oily', 'dry', 'tough', 'chewy', 'rubbery', 'mushy', 'watery', 'lukewarm', 'freezing', 'overcooked', 'raw', 'uncooked', 'burned', 'charred', 'blackened'];
+
+            // Negative phrases that should be caught
+            const negativePhrases = [
+                'not good', 'not great', 'not nice', 'not fresh', 'not tasty', 'not delicious',
+                'not happy', 'not satisfied', 'not pleased', 'not recommend', 'not worth',
+                'never again', 'waste of money', 'money wasted', 'total disaster',
+                'completely disappointed', 'utterly disgusting', 'absolutely terrible',
+                'worst ever', 'never ordering', 'avoid this', 'stay away',
+                'don\'t order', 'don\'t buy', 'don\'t go', 'don\'t waste',
+                'took forever', 'way too long', 'extremely slow', 'very slow',
+                'ice cold', 'stone cold', 'completely cold', 'totally cold',
+                'no flavor', 'no taste', 'zero taste', 'lacks flavor',
+                'very disappointed', 'extremely disappointed', 'highly disappointed',
+                'poor service', 'bad service', 'terrible service', 'awful service',
+                'rude staff', 'unprofessional staff', 'horrible staff'
+            ];
+
+            // Positive phrases
+            const positivePhrases = [
+                'very good', 'really good', 'so good', 'extremely good',
+                'very delicious', 'really delicious', 'so delicious', 'extremely delicious',
+                'highly recommend', 'definitely recommend', 'strongly recommend',
+                'will order again', 'ordering again', 'coming back',
+                'exceeded expectations', 'beyond expectations', 'better than expected',
+                'perfectly cooked', 'cooked perfectly', 'just right',
+                'amazing flavor', 'incredible taste', 'fantastic quality',
+                'excellent service', 'outstanding service', 'great service',
+                'friendly staff', 'helpful staff', 'professional staff',
+                'fast delivery', 'quick delivery', 'prompt delivery',
+                'still hot', 'nice and hot', 'perfectly warm'
+            ];
+
+            let score = 0;
+
+            // Check for negative phrases first (they're more specific)
+            negativePhrases.forEach(phrase => {
+                if (normalizedText.includes(phrase)) {
+                    score -= 2; // Stronger negative weight for phrases
+                }
+            });
+
+            // Check for positive phrases
+            positivePhrases.forEach(phrase => {
+                if (normalizedText.includes(phrase)) {
+                    score += 2; // Stronger positive weight for phrases
+                }
+            });
+
+            // Check individual words
+            const words = normalizedText.split(/\W+/);
+            words.forEach(word => {
+                if (positiveWords.includes(word)) score += 1;
+                if (negativeWords.includes(word)) score -= 1;
+            });
+
+            // Handle negations more carefully
+            const negationWords = ['not', 'no', 'never', 'nothing', 'nobody', 'nowhere', 'neither', 'nor', 'none', 'hardly', 'barely', 'scarcely', 'seldom', 'rarely'];
+
+            // Look for negations followed by positive words
+            for (let i = 0; i < words.length - 1; i++) {
+                if (negationWords.includes(words[i])) {
+                    // Check next 1-2 words for positive terms
+                    for (let j = i + 1; j <= Math.min(i + 2, words.length - 1); j++) {
+                        if (positiveWords.includes(words[j])) {
+                            score -= 2; // "not good" should be negative
+                        }
+                    }
+                }
+            }
+
+            // Star rating context (if mentioned in text)
+            if (normalizedText.includes('1 star') || normalizedText.includes('one star')) score -= 3;
+            if (normalizedText.includes('2 star') || normalizedText.includes('two star')) score -= 2;
+            if (normalizedText.includes('5 star') || normalizedText.includes('five star')) score += 3;
+            if (normalizedText.includes('4 star') || normalizedText.includes('four star')) score += 2;
+
+            // Determine final sentiment with better thresholds
+            if (score >= 2) return 'positive';
+            if (score <= -2) return 'negative';
+            if (score === 1) return 'positive'; // Slightly positive
+            if (score === -1) return 'negative'; // Slightly negative
+            return 'neutral';
+        }
+
+        function extractKeywords(texts) {
+            const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'was', 'are', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'me', 'him', 'her', 'us', 'them'];
+
+            const foodKeywords = ['pizza', 'burger', 'pasta', 'chicken', 'beef', 'fish', 'salad', 'soup', 'sandwich', 'fries', 'dessert', 'cake', 'ice cream', 'coffee', 'tea', 'drink', 'sauce', 'cheese', 'bread', 'rice', 'noodles', 'vegetables', 'meat', 'seafood'];
+
+            const serviceKeywords = ['delivery', 'service', 'staff', 'waiter', 'waitress', 'manager', 'kitchen', 'restaurant', 'order', 'time', 'fast', 'slow', 'quick', 'late', 'early', 'hot', 'cold', 'fresh', 'quality', 'price', 'value', 'clean', 'dirty', 'atmosphere', 'experience'];
+
+            const allKeywords = [...foodKeywords, ...serviceKeywords];
+            const wordCount = {};
+
+            texts.forEach(text => {
+                const words = text.toLowerCase().split(/\W+/);
+                words.forEach(word => {
+                    if (word.length > 2 && !stopWords.includes(word) && allKeywords.includes(word)) {
+                        wordCount[word] = (wordCount[word] || 0) + 1;
+                    }
+                });
+            });
+
+            return Object.entries(wordCount)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 10)
+                .map(([word, count]) => ({ word, count }));
+        }
+
+        function updateTextualAnalysis() {
+            const analysisSection = document.getElementById('analysisSection');
+
+            if (feedbackData.length === 0) {
+                analysisSection.style.display = 'none';
+                return;
+            }
+
+            analysisSection.style.display = 'block';
+
+            // Sentiment Analysis
+            const sentiments = { positive: 0, neutral: 0, negative: 0 };
+            const comments = feedbackData.map(feedback => feedback.comments);
+
+            comments.forEach(comment => {
+                const sentiment = analyzeSentiment(comment);
+                sentiments[sentiment]++;
+            });
+
+            document.getElementById('positiveCount').textContent = sentiments.positive;
+            document.getElementById('neutralCount').textContent = sentiments.neutral;
+            document.getElementById('negativeCount').textContent = sentiments.negative;
+
+            // Keyword Extraction
+            const keywords = extractKeywords(comments);
+            const keywordsContainer = document.getElementById('keywordsContainer');
+
+            if (keywords.length === 0) {
+                keywordsContainer.innerHTML = '<div class="no-analysis">No common keywords found yet.</div>';
+            } else {
+                keywordsContainer.innerHTML = keywords.map(({ word, count }) => `
+                    <div class="keyword-tag">
+                        <span>${word}</span>
+                        <span class="keyword-count">${count}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else {
+                    stars += '<i class="far fa-star" style="color: #ddd;"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Interactive Feedback Hover Spot Functionality
+        let isPreviewPinned = false;
+        let hoverTimeout;
+
+        function initializeFeedbackHoverSpot() {
+            const hoverSpot = document.getElementById('feedbackHoverSpot');
+            const preview = document.getElementById('feedbackPreview');
+            const closeBtn = document.getElementById('feedbackPreviewClose');
+
+            // Update preview content
+            updateFeedbackPreview();
+
+            // Hover events
+            hoverSpot.addEventListener('mouseenter', function() {
+                if (!isPreviewPinned) {
+                    clearTimeout(hoverTimeout);
+                    preview.classList.add('show');
+                    hoverSpot.classList.add('pulse');
+                }
+            });
+
+            hoverSpot.addEventListener('mouseleave', function() {
+                if (!isPreviewPinned) {
+                    hoverTimeout = setTimeout(() => {
+                        preview.classList.remove('show');
+                        hoverSpot.classList.remove('pulse');
+                    }, 300);
+                }
+            });
+
+            // Click to pin/unpin
+            hoverSpot.addEventListener('click', function() {
+                if (isPreviewPinned) {
+                    // Unpin
+                    isPreviewPinned = false;
+                    preview.classList.remove('pinned');
+                    preview.classList.remove('show');
+                    hoverSpot.classList.remove('active');
+                    hoverSpot.classList.remove('pulse');
+                } else {
+                    // Pin
+                    isPreviewPinned = true;
+                    preview.classList.add('pinned');
+                    preview.classList.add('show');
+                    hoverSpot.classList.add('active');
+                    hoverSpot.classList.add('pulse');
+                }
+            });
+
+            // Close button
+            closeBtn.addEventListener('click', function() {
+                isPreviewPinned = false;
+                preview.classList.remove('pinned');
+                preview.classList.remove('show');
+                hoverSpot.classList.remove('active');
+                hoverSpot.classList.remove('pulse');
+            });
+
+            // Preview hover events to keep it open
+            preview.addEventListener('mouseenter', function() {
+                if (!isPreviewPinned) {
+                    clearTimeout(hoverTimeout);
+                }
+            });
+
+            preview.addEventListener('mouseleave', function() {
+                if (!isPreviewPinned) {
+                    hoverTimeout = setTimeout(() => {
+                        preview.classList.remove('show');
+                        hoverSpot.classList.remove('pulse');
+                    }, 300);
+                }
+            });
+        }
+
+        function updateFeedbackPreview() {
+            const previewContent = document.getElementById('feedbackPreviewContent');
+
+            if (feedbackData.length === 0) {
+                previewContent.innerHTML = `
+                    <div class="feedback-preview-empty">
+                        <i class="fas fa-comment-slash" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
+                        <p>No feedback yet. Be the first to share your experience!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Show latest 3 feedbacks
+            const latestFeedbacks = feedbackData.slice(0, 3);
+            previewContent.innerHTML = latestFeedbacks.map(feedback => `
+                <div class="feedback-preview-item">
+                    <div class="feedback-preview-rating">
+                        ${generateStars(feedback.rating)}
+                    </div>
+                    <div class="feedback-preview-name">${feedback.name}</div>
+                    <div class="feedback-preview-comment">"${feedback.comments.length > 80 ? feedback.comments.substring(0, 80) + '...' : feedback.comments}"</div>
+                    <div class="feedback-preview-date">${feedback.date}</div>
+                </div>
+            `).join('');
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const feedbackForm = document.getElementById('feedbackFormElement');
             const feedbackSummary = document.getElementById('feedbackSummary');
 
-            // Initially hide the summary
+            // Initialize interactive feedback hover spot
+            initializeFeedbackHoverSpot();
+
+            // Initially hide the summary and update stats
             feedbackSummary.style.display = 'none';
+            updateFeedbackStats();
+            updateTextualAnalysis();
 
             feedbackForm.addEventListener('submit', function (e) {
                 e.preventDefault();
 
-                const name = document.getElementById('name').value;
+                const name = document.getElementById('name').value || 'Anonymous';
                 const email = document.getElementById('email').value;
                 const rating = document.querySelector('input[name="rating"]:checked')?.value;
                 const comments = document.getElementById('comments').value;
 
                 if (!comments) {
-                    alert('Please provide your comments.');
+                    showAlert('Please provide your comments to help us improve our service.');
                     return;
                 }
 
                 if (!rating) {
-                    alert('Please rate your experience.');
+                    showAlert('Please rate your experience by selecting stars.');
                     return;
                 }
 
+                // Create feedback object
+                const feedback = {
+                    name: name,
+                    email: email,
+                    rating: parseInt(rating),
+                    comments: comments,
+                    date: new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                };
+
+                // Save feedback locally
+                saveFeedback(feedback);
+
+                // Update feedback stats, preview, and analysis
+                updateFeedbackStats();
+                updateFeedbackPreview();
+                updateTextualAnalysis();
+
+                // Show personalized thank you
+                showPersonalizedThankYou(name);
+
+                // Hide form and show summary
+                document.getElementById('feedbackForm').style.display = 'none';
+                feedbackSummary.style.display = 'block';
+
+                // Scroll to feedback display
+                setTimeout(() => {
+                    document.getElementById('feedbackDisplay').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }, 1000);
+
+                // Optional: Still try to submit to external service
                 const formData = new URLSearchParams();
-                formData.append('name', name || 'Anonymous');
+                formData.append('name', name);
                 formData.append('email', email || '');
                 formData.append('rating', rating);
                 formData.append('comments', comments);
@@ -648,18 +1921,8 @@
                     method: 'POST',
                     body: formData,
                 })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === 'success') {
-                        feedbackForm.style.display = 'none';
-                        feedbackSummary.style.display = 'block';
-                    } else {
-                        alert('Submission failed.');
-                    }
-                })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert('Submission error. Check console for details.');
+                    console.log('External submission failed, but feedback saved locally:', error);
                 });
             });
         });
